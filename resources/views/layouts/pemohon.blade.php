@@ -184,6 +184,25 @@ padding:12px;
 font-size:14px;
 }
 
+/* JARAK KE FOOTER */
+footer{
+margin-top:80px !important;
+}
+
+/* TAMBAHAN NAFAS */
+.footer{
+padding-top:60px !important;
+}
+
+/* BIAR TRANSISI HALUS */
+.footer::before{
+content:'';
+display:block;
+height:1px;
+background:linear-gradient(to right, transparent, #ccc, transparent);
+margin-bottom:30px;
+}
+
 </style>
 </head>
 

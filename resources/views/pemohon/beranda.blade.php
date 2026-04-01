@@ -68,10 +68,19 @@ body{
     color:white;
     max-width:750px;
 }
+/* JUDUL UTAMA */
 .hero h1{
-    font-size:56px;
-    font-weight:700;
-    line-height:1.2;
+font-size:56px;
+font-weight:800;
+letter-spacing:1.5px;
+line-height:1.3;
+text-transform:uppercase;
+
+background:linear-gradient(to right, #ffffff, #cfe9df);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+text-shadow:0 4px 20px rgba(0,0,0,0.5);
 }
 .hero p{
     font-size:22px;
@@ -222,7 +231,7 @@ PROVINSI BENGKULU
 <p>
 Layanan resmi pengajuan peminjaman arsip secara daring yang diselenggarakan oleh Dinas Perpustakaan dan Kearsipan Provinsi Bengkulu guna meningkatkan efektivitas pelayanan, transparansi proses verifikasi, serta akuntabilitas tata kelola kearsipan daerah.
 </p>
-<a href="#" class="btn btn-success">
+<a href="{{ route('pemohon.peminjaman') }}" class="btn btn-success">
 Ajukan Permohonan <i class="bi bi-arrow-right"></i>
 </a>
 </div>

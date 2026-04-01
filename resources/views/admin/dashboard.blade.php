@@ -26,6 +26,14 @@
     color:white;
     position:relative;
     box-shadow:0 5px 15px rgba(0,0,0,0.05);
+    transition:0.2s;
+}
+
+/* 🔥 HOVER EFFECT */
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.1);
+    cursor:pointer;
 }
 
 .card i{
@@ -61,35 +69,61 @@
 }
 </style>
 
+@if($menunggu > 0)
+<div class="alert alert-warning d-flex justify-content-between align-items-center">
+
+    <div>
+        🔔 <strong>{{ $menunggu }}</strong> permohonan baru menunggu verifikasi
+    </div>
+
+    <a href="{{ route('admin.kelola') }}" class="btn btn-sm btn-dark">
+        Lihat
+    </a>
+
+</div>
+@endif
+
 <div class="dashboard">
 
 <h1 style="margin-bottom:25px;">Selamat datang!</h1>
 
 <div class="cards">
 
-    <div class="card blue">
-        <i class="fas fa-clock"></i>
-        <h2>{{ $menunggu }}</h2>
-        <p>Menunggu Verifikasi</p>
-    </div>
+    {{-- MENUNGGU --}}
+    <a href="{{ route('admin.kelola') }}?status=menunggu" class="text-decoration-none">
+        <div class="card blue">
+            <i class="fas fa-clock"></i>
+            <h2>{{ $menunggu }}</h2>
+            <p>Menunggu Verifikasi</p>
+        </div>
+    </a>
 
-    <div class="card green">
-        <i class="fas fa-check-circle"></i>
-        <h2>{{ $disetujui }}</h2>
-        <p>Disetujui</p>
-    </div>
+    {{-- DISETUJUI --}}
+    <a href="{{ route('admin.kelola') }}?status=disetujui" class="text-decoration-none">
+        <div class="card green">
+            <i class="fas fa-check-circle"></i>
+            <h2>{{ $disetujui }}</h2>
+            <p>Disetujui</p>
+        </div>
+    </a>
 
-    <div class="card red">
-        <i class="fas fa-times-circle"></i>
-        <h2>{{ $ditolak }}</h2>
-        <p>Ditolak</p>
-    </div>
+    {{-- DITOLAK --}}
+    <a href="{{ route('admin.kelola') }}?status=ditolak" class="text-decoration-none">
+        <div class="card red">
+            <i class="fas fa-times-circle"></i>
+            <h2>{{ $ditolak }}</h2>
+            <p>Ditolak</p>
+        </div>
+    </a>
 
+    {{-- JADWAL --}}
+   <a href="{{ route('admin.jadwal') }}" class="text-decoration-none">
     <div class="card orange">
         <i class="fas fa-calendar-alt"></i>
         <h2>{{ $jadwal }}</h2>
         <p>Jadwal Kunjungan</p>
     </div>
+</a>
 
 </div>
 

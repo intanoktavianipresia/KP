@@ -59,8 +59,13 @@
 </tr>
 
 <tr>
-<th>Tanggal Kunjungan yang Diinginkan</th>
-<td>{{ \Carbon\Carbon::parse($data->tanggal_kunjungan)->format('d F Y') }}</td>
+<th>Tanggal Kunjungan</th>
+<td>
+    {{ $data->tanggal_kunjungan 
+        ? \Carbon\Carbon::parse($data->tanggal_kunjungan)->format('d F Y') 
+        : '-' 
+    }}
+</td>
 </tr>
 
 <tr>
@@ -68,7 +73,7 @@
 <td>
 
 @if($data->status == 'menunggu')
-<span class="badge bg-warning text-dark">Menunggu Verifikasi</span>
+<span class="badge bg-warning text-dark">Menunggu</span>
 
 @elseif($data->status == 'disetujui')
 <span class="badge bg-success">Disetujui</span>
@@ -76,8 +81,8 @@
 @elseif($data->status == 'ditolak')
 <span class="badge bg-danger">Ditolak</span>
 
-@elseif($data->status == 'selesai')
-<span class="badge bg-info text-dark">Selesai</span>
+@else
+<span class="badge bg-info">Selesai</span>
 @endif
 
 </td>
@@ -87,16 +92,24 @@
 
 <div class="mt-3">
 
-<a href="{{ route('admin.kelola') }}" class="btn btn-secondary">
-Kembali
+@php
+    $back = request('from') == 'jadwal' 
+        ? route('admin.jadwal') 
+        : route('admin.kelola');
+@endphp
+
+<a href="{{ $back }}" class="btn btn-secondary">
+    Kembali
 </a>
 
 @if($data->status == 'menunggu')
 
+<!-- SETUJUI -->
 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalSetujui">
 Setujui
 </button>
 
+<!-- TOLAK -->
 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalTolak">
 Tolak
 </button>
@@ -106,11 +119,7 @@ Tolak
 </div>
 
 @else
-
-<div class="alert alert-danger">
-Data tidak ditemukan
-</div>
-
+<div class="alert alert-danger">Data tidak ditemukan</div>
 @endif
 
 </div>
@@ -118,94 +127,84 @@ Data tidak ditemukan
 
 </div>
 
-
 <!-- MODAL SETUJUI -->
-
-<div class="modal fade" id="modalSetujui" tabindex="-1">
+<div class="modal fade" id="modalSetujui">
 <div class="modal-dialog">
 <div class="modal-content">
 
 <div class="modal-header">
-<h5 class="modal-title">Penjadwalan Kunjungan Pemohon</h5>
-<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<h5>Setujui Permohonan</h5>
+<button class="btn-close" data-bs-dismiss="modal"></button>
 </div>
-
-<form action="{{ route('admin.setujui',$data->nomor_permohonan) }}" method="POST">
-@csrf
 
 <div class="modal-body">
 
-<div class="mb-3">
 <label>Tanggal Kunjungan Final</label>
-<input type="date" name="tanggal_kunjungan_final" class="form-control" required>
-</div>
+<input type="date" id="tgl" class="form-control mb-2">
 
-<div class="mb-3">
-<label>Waktu Kunjungan</label>
-<input type="text" name="waktu_kunjungan" class="form-control" placeholder="09:00 - 12:00">
-</div>
+<label>Waktu</label>
+<input type="text" id="waktu" class="form-control" placeholder="09:00 - 12:00">
 
 </div>
 
 <div class="modal-footer">
 
-<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-Batal
-</button>
+<button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
 
-<button type="submit" class="btn btn-success">
+<a id="btnSetujui" class="btn btn-success">
 Konfirmasi
-</button>
+</a>
 
 </div>
-
-</form>
 
 </div>
 </div>
 </div>
-
-
 
 <!-- MODAL TOLAK -->
-
-<div class="modal fade" id="modalTolak" tabindex="-1">
+<div class="modal fade" id="modalTolak">
 <div class="modal-dialog">
 <div class="modal-content">
 
 <div class="modal-header">
-<h5 class="modal-title">Konfirmasi Penolakan</h5>
-<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<h5>Tolak Permohonan</h5>
+<button class="btn-close" data-bs-dismiss="modal"></button>
 </div>
-
-<form action="{{ route('admin.tolak',$data->nomor_permohonan) }}" method="POST">
-@csrf
 
 <div class="modal-body">
 
-<div class="mb-3">
-<label>Alasan Penolakan</label>
-<textarea name="alasan_penolakan" class="form-control" required></textarea>
-</div>
+<label>Alasan</label>
+<textarea id="alasan" class="form-control"></textarea>
 
 </div>
 
 <div class="modal-footer">
 
-<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-Batal
-</button>
+<button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
 
-<button type="submit" class="btn btn-danger">
+<a id="btnTolak" class="btn btn-danger">
 Konfirmasi
-</button>
+</a>
 
 </div>
 
-</form>
+</div>
+</div>
+</div>
 
-</div>
-</div>
-</div>
+<script>
+document.getElementById('btnSetujui').onclick = function() {
+    let tgl = document.getElementById('tgl').value;
+    let waktu = document.getElementById('waktu').value;
+
+    window.location.href = "/admin/setujui/{{ $data->id }}?tgl="+tgl+"&waktu="+waktu;
+}
+
+document.getElementById('btnTolak').onclick = function() {
+    let alasan = document.getElementById('alasan').value;
+
+    window.location.href = "/admin/tolak/{{ $data->id }}?alasan="+alasan;
+}
+</script>
 
 @endsection
