@@ -132,9 +132,13 @@ class AdminController extends Controller
         }
 
         DB::table('pemohons')->where('id', $id)->update([
-            'status' => 'disetujui',
-            'updated_at' => now()
-        ]);
+    'status' => 'disetujui',
+    'tanggal_kunjungan' => request('tgl'),
+    'waktu_kunjungan' => request('waktu'),
+    'updated_at' => now()
+]);
+
+$data = DB::table('pemohons')->where('id', $id)->first();
 
         DB::table('riwayat_status')->insert([
             'peminjaman_id' => $data->id,
@@ -164,7 +168,9 @@ Permohonan peminjaman arsip Anda telah *DISETUJUI*.
 • Nomor : {$data->nomor_permohonan}
 • Arsip : {$data->arsip_dimohon}
 • Tanggal Pengajuan : ".date('d-m-Y', strtotime($data->created_at))."
-• Jadwal Kunjungan : ".date('d-m-Y', strtotime($data->tanggal_kunjungan))."
+• Jadwal Kunjungan :
+".date('d-m-Y', strtotime(request('tgl')))." 
+Pukul ".request('waktu')." WIB
 
 Silakan datang sesuai jadwal yang telah ditentukan.
 
