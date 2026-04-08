@@ -23,8 +23,10 @@ class AdminController extends Controller
         $selesai   = DB::table('pemohons')->where('status', 'selesai')->count();
 
         $jadwal = DB::table('pemohons')
-            ->whereNotNull('tanggal_kunjungan')
-            ->count();
+    ->where('status', 'disetujui')
+    ->whereNotNull('tanggal_kunjungan')
+    ->where('tanggal_kunjungan', '>=', now())
+    ->count();
 
         $grafik = DB::table('pemohons')
             ->selectRaw('MONTH(created_at) as bulan, COUNT(*) as total')
@@ -152,11 +154,30 @@ class AdminController extends Controller
         } catch (\Exception $e) {}
 
         // WA
-        $this->kirimWA($data->telepon, "Permohonan Anda DISETUJUI. Nomor: {$data->nomor_permohonan}");
+        $pesan = "📢 *PEMBERITAHUAN RESMI*
 
-        return redirect()->route('admin.kelola')
-            ->with('success','Disetujui');
-    }
+Yth. Bapak/Ibu {$data->nama_pemohon},
+
+Permohonan peminjaman arsip Anda telah *DISETUJUI*.
+
+📄 *Detail Permohonan:*
+• Nomor : {$data->nomor_permohonan}
+• Arsip : {$data->arsip_dimohon}
+• Tanggal Pengajuan : ".date('d-m-Y', strtotime($data->created_at))."
+• Jadwal Kunjungan : ".date('d-m-Y', strtotime($data->tanggal_kunjungan))."
+
+Silakan datang sesuai jadwal yang telah ditentukan.
+
+Terima kasih atas perhatian dan kerja sama Anda.
+
+—
+*Dinas Perpustakaan dan Kearsipan*
+Provinsi Bengkulu";
+
+$this->kirimWA($data->telepon, $pesan);
+
+return redirect()->back()->with('success', 'Permohonan berhasil disetujui');
+}
 
     // =========================
     // TOLAK
@@ -190,11 +211,29 @@ class AdminController extends Controller
             });
         } catch (\Exception $e) {}
 
-        $this->kirimWA($data->telepon, "Permohonan Anda DITOLAK.");
+        $pesan = "📢 *PEMBERITAHUAN RESMI*
 
-        return redirect()->route('admin.kelola')
-            ->with('success','Ditolak');
-    }
+Yth. Bapak/Ibu {$data->nama_pemohon},
+
+Permohonan peminjaman arsip Anda *DITOLAK*.
+
+📄 *Detail Permohonan:*
+• Nomor : {$data->nomor_permohonan}
+• Arsip : {$data->arsip_dimohon}
+• Tanggal Pengajuan : ".date('d-m-Y', strtotime($data->created_at))."
+
+Untuk informasi lebih lanjut, silakan hubungi pihak layanan.
+
+Terima kasih atas perhatian Anda.
+
+—
+*Dinas Perpustakaan dan Kearsipan*
+Provinsi Bengkulu";
+
+$this->kirimWA($data->telepon, $pesan);
+
+return redirect()->back()->with('success', 'Permohonan berhasil ditolak');
+}
 
     // =========================
     // 🔥 BALAS PESAN (AUTO EMAIL)
@@ -212,10 +251,16 @@ class AdminController extends Controller
         }
 
         // EMAIL AUTO
-        Mail::raw($request->balasan, function($msg) use ($data){
-            $msg->to($data->email)
-                ->subject('Balasan dari Admin Arsip');
-        });
+        Mail::send('email.balasan_kontak', [
+    'nama' => $data->nama,
+    'email' => $data->email,
+    'pesan' => $data->pesan,
+    'balasan' => $request->balasan,
+    'tanggal' => now()->format('d F Y H:i')
+], function($msg) use ($data){
+    $msg->to($data->email)
+        ->subject('Tanggapan atas Pesan Anda - Dinas Perpustakaan dan Kearsipan Provinsi Bengkulu');
+});
 
         // SIMPAN BALASAN
         DB::table('kontaks')->where('id',$id)->update([
@@ -295,27 +340,38 @@ class AdminController extends Controller
     }
 
     public function jadwal(Request $request)
-    {
-        $query = DB::table('pemohons')
-            ->where('status', 'disetujui')
-            ->whereNotNull('tanggal_kunjungan');
+{
+    // 🔥 AUTO UPDATE STATUS JADI SELESAI
+    DB::table('pemohons')
+        ->where('status', 'disetujui')
+        ->whereNotNull('tanggal_kunjungan')
+        ->where('tanggal_kunjungan', '<', now())
+        ->update([
+            'status' => 'selesai',
+            'updated_at' => now()
+        ]);
 
-        if($request->filter == 'hari_ini'){
-            $query->whereDate('tanggal_kunjungan', now());
-        }
+    $query = DB::table('pemohons')
+        ->where('status', 'disetujui')
+        ->whereNotNull('tanggal_kunjungan');
 
-        if($request->filter == 'minggu_ini'){
-            $query->whereBetween('tanggal_kunjungan', [
-                now()->startOfWeek(),
-                now()->endOfWeek()
-            ]);
-        }
-
-        $data = $query->orderBy('tanggal_kunjungan', 'asc')
-            ->paginate(10)
-            ->withQueryString();
-
-        return view('admin.jadwal', compact('data'));
+    if($request->filter == 'hari_ini'){
+        $query->whereDate('tanggal_kunjungan', now());
     }
+
+    if($request->filter == 'minggu_ini'){
+        $query->whereBetween('tanggal_kunjungan', [
+            now()->startOfWeek(),
+            now()->endOfWeek()
+        ]);
+    }
+
+    $data = $query->orderBy('tanggal_kunjungan', 'asc')
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('admin.jadwal', compact('data'));
+}
+    
 
 }

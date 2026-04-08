@@ -210,9 +210,9 @@ margin-bottom:30px;
 
 <!-- HEADER -->
 <div class="top-header">
-<div class="container d-flex align-items-center">
+<div class="d-flex align-items-center ps-5">
 
-<img src="{{ asset('images/logo.png') }}" width="65" class="me-3">
+<img src="{{ asset('images/logo.png') }}" width="40" class="me-2">
 
 <div>
 <strong>DINAS PERPUSTAKAAN DAN KEARSIPAN</strong><br>

@@ -4,36 +4,61 @@
 
 <style>
 
-/* HERO */
+/* ===== HERO PREMIUM ===== */
 .banner{
+position:relative;
 background:linear-gradient(135deg,#0b3d2e,#1f9b74);
-padding:60px 20px;
+padding:80px 20px;
 text-align:center;
 color:white;
-border-radius:0 0 30px 30px;
+overflow:hidden;
 box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
+.banner::before{
+content:'';
+position:absolute;
+width:200%;
+height:200%;
+top:-50%;
+left:-50%;
+background:radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+animation:rotateBg 12s linear infinite;
+}
+
 .banner h1{
-font-size:40px;
-font-weight:800;
-letter-spacing:3px;
+font-size:42px;
+font-weight:900;
+letter-spacing:4px;
 text-transform:uppercase;
+
+background:linear-gradient(to bottom,#ffffff,#cfe9df);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+text-shadow:0 5px 25px rgba(0,0,0,0.4);
+position:relative;
+z-index:2;
 }
 
 .banner p{
 opacity:.9;
+margin-top:10px;
+font-size:18px;
+position:relative;
+z-index:2;
 }
 
-/* CONTAINER */
+/* ===== CONTAINER ===== */
 .container-status{
 display:flex;
 gap:30px;
 padding:50px 0;
 flex-wrap:wrap;
+justify-content:center;
 }
 
-/* FORM */
+/* ===== FORM ===== */
 .cek-box{
 background:#ffffff;
 padding:25px;
@@ -55,7 +80,7 @@ border-radius:10px;
 border:1px solid #ccc;
 }
 
-/* BUTTON */
+/* ===== BUTTON ===== */
 .btn{
 background:#0b3d2e;
 color:white;
@@ -73,7 +98,7 @@ background:#198754;
 transform:translateY(-2px);
 }
 
-/* STATUS BOX */
+/* ===== STATUS BOX ===== */
 .status-box{
 background:white;
 padding:25px;
@@ -83,13 +108,13 @@ width:350px;
 box-shadow:0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* STATUS */
+/* ===== STATUS BADGE ===== */
 .status-menunggu{color:#ff9800;font-weight:bold;}
 .status-approve{color:#198754;font-weight:bold;}
 .status-tolak{color:#dc3545;font-weight:bold;}
 .status-selesai{color:#0d6efd;font-weight:bold;}
 
-/* ALERT */
+/* ===== ALERT ===== */
 .alert{
 padding:12px;
 border-radius:8px;
@@ -100,13 +125,14 @@ background:#f8d7da;
 color:#721c24;
 }
 
-/* RIWAYAT */
+/* ===== RIWAYAT ===== */
 .history{
 padding:20px 0 50px;
 }
 
 .history h3{
 margin-bottom:20px;
+text-align:center;
 }
 
 .history-item{
@@ -116,9 +142,20 @@ margin-bottom:12px;
 border-left:5px solid #1f9b74;
 border-radius:8px;
 box-shadow:0 5px 15px rgba(0,0,0,0.05);
+transition:.3s;
 }
 
-/* RESPONSIVE */
+.history-item:hover{
+transform:translateX(5px);
+}
+
+/* ===== ANIMASI ===== */
+@keyframes rotateBg{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+/* ===== RESPONSIVE ===== */
 @media(max-width:768px){
 .container-status{
 flex-direction:column;
@@ -132,7 +169,7 @@ align-items:center;
 <!-- HERO -->
 <div class="banner">
 <h1>STATUS PEMINJAMAN ARSIP</h1>
-<p>Cek perkembangan permohonan Anda</p>
+<p>Cek perkembangan permohonan Anda secara real-time</p>
 </div>
 
 

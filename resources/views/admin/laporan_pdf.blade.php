@@ -111,14 +111,30 @@
 <body>
 
 <!-- ===== HEADER ===== -->
-<div class="header">
-    <h2>DINAS PERPUSTAKAAN DAN KEARSIPAN</h2>
-    <h3>PROVINSI BENGKULU</h3>
-    <p>Jl. Pembangunan No. 01 Kota Bengkulu</p>
-</div>
+<table width="100%" style="border-bottom:3px solid black;">
+    <tr>
+        <td width="15%">
+            <img src="{{ public_path('images/logo.png') }}" width="80">
+        </td>
+        <td style="text-align:center;">
+            <div style="font-size:12px; font-weight:bold;">
+                PEMERINTAH PROVINSI BENGKULU
+            </div>
+            <div style="font-size:16px; font-weight:bold;">
+                DINAS PERPUSTAKAAN DAN KEARSIPAN
+            </div>
+            <div style="font-size:11px;">
+                Jalan Mahoni Raya No. 12 Kota Bengkulu Telp. (0736) 26095
+            </div>
+            <div style="font-size:11px;">
+                website : http://perpusda.bengkuluprov.go.id 
+                email : perpusbengkulu@gmail.com
+            </div>
+        </td>
+    </tr>
+</table>
 
-<div class="line"></div>
-<div class="line2"></div>
+<div style="border-top:1px solid black; margin-top:2px; margin-bottom:10px;"></div>
 
 <!-- ===== JUDUL ===== -->
 <div class="judul">

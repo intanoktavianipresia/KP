@@ -299,6 +299,27 @@ Layanan ini diselenggarakan untuk mendukung kebutuhan informasi penelitian dan a
 <button class="jenis-btn foto">Foto</button>
 </div>
 
+<!-- 🔥 TAMBAHAN FINAL (TIDAK MENGUBAH YANG LAIN) -->
+<div style="margin-top:25px;">
+    <a href="https://link-web-temanmu.com" target="_blank" 
+       style="
+        background:linear-gradient(45deg,#0f5d3f,#1f9b74);
+        color:white;
+        padding:10px 25px;
+        border-radius:8px;
+        text-decoration:none;
+        font-weight:600;
+        box-shadow:0 8px 20px rgba(0,0,0,0.1);
+        display:inline-block;
+        transition:.3s;
+       "
+       onmouseover="this.style.transform='scale(1.05)'"
+       onmouseout="this.style.transform='scale(1)'"
+    >
+        🔎 Lihat Katalog Arsip
+    </a>
+</div>
+
 </div>
 
 

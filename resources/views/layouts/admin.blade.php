@@ -14,31 +14,6 @@
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <li class="nav-item">
-
-<a href="{{ route('admin.kelola') }}" class="nav-link position-relative">
-
-    🔔
-
-    @if($menunggu > 0)
-    <span style="
-        position:absolute;
-        top:0;
-        right:0;
-        background:red;
-        color:white;
-        font-size:12px;
-        padding:2px 6px;
-        border-radius:50%;
-    ">
-        {{ $menunggu }}
-    </span>
-    @endif
-
-</a>
-
-</li>
-
     <style>
         body{
             margin:0;
