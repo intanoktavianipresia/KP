@@ -2,271 +2,266 @@
 
 @section('content')
 
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 <style>
+    :root {
+        --pine-green: #064e3b;
+        --pine-light: #059669;
+        --soft-bg: #f8fafc;
+        --accent-orange: #f59e0b;
+        --accent-blue: #3b82f6;
+    }
 
-/* ===== HERO PREMIUM ===== */
-.banner{
-position:relative;
-background:linear-gradient(135deg,#0b3d2e,#1f9b74);
-padding:80px 20px;
-text-align:center;
-color:white;
-overflow:hidden;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-}
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--soft-bg);
+        color: #1e293b;
+    }
 
-.banner::before{
-content:'';
-position:absolute;
-width:200%;
-height:200%;
-top:-50%;
-left:-50%;
-background:radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
-animation:rotateBg 12s linear infinite;
-}
+    /* ===== HERO PREMIUM ===== */
+    .banner {
+        position: relative;
+        background: linear-gradient(135deg, var(--pine-green), var(--pine-light));
+        padding: 100px 20px;
+        text-align: center;
+        color: white;
+        clip-path: ellipse(150% 100% at 50% 0%);
+    }
 
-.banner h1{
-font-size:42px;
-font-weight:900;
-letter-spacing:4px;
-text-transform:uppercase;
+    .banner h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
 
-background:linear-gradient(to bottom,#ffffff,#cfe9df);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+    /* ===== CARD BOXES ===== */
+    .cek-box, .status-card {
+        background: white;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+        border: 1px solid rgba(0,0,0,0.05);
+        height: 100%;
+    }
 
-text-shadow:0 5px 25px rgba(0,0,0,0.4);
-position:relative;
-z-index:2;
-}
+    .input-group-custom {
+        position: relative;
+        margin-top: 20px;
+    }
 
-.banner p{
-opacity:.9;
-margin-top:10px;
-font-size:18px;
-position:relative;
-z-index:2;
-}
+    .input-group-custom input {
+        width: 100%;
+        padding: 15px 20px 15px 50px;
+        border-radius: 15px;
+        border: 2px solid #e2e8f0;
+        transition: 0.3s;
+        font-weight: 600;
+    }
 
-/* ===== CONTAINER ===== */
-.container-status{
-display:flex;
-gap:30px;
-padding:50px 0;
-flex-wrap:wrap;
-justify-content:center;
-}
+    .input-group-custom input:focus {
+        border-color: var(--pine-light);
+        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+        outline: none;
+    }
 
-/* ===== FORM ===== */
-.cek-box{
-background:#ffffff;
-padding:25px;
-border-radius:15px;
-width:320px;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
-transition:.3s;
-}
+    .input-group-custom i {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--pine-light);
+        font-size: 1.2rem;
+    }
 
-.cek-box:hover{
-transform:translateY(-5px);
-}
+    .btn-cek {
+        background: var(--pine-green);
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 15px;
+        width: 100%;
+        font-weight: 800;
+        margin-top: 15px;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
 
-.cek-box input{
-width:100%;
-padding:12px;
-margin-bottom:12px;
-border-radius:10px;
-border:1px solid #ccc;
-}
+    .btn-cek:hover {
+        background: var(--pine-light);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(6, 78, 59, 0.2);
+    }
 
-/* ===== BUTTON ===== */
-.btn{
-background:#0b3d2e;
-color:white;
-padding:12px;
-border:none;
-border-radius:25px;
-cursor:pointer;
-width:100%;
-font-weight:600;
-transition:.3s;
-}
+    /* ===== STATUS BADGES ===== */
+    .badge-status {
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .bg-menunggu { background: #fff7ed; color: #c2410c; }
+    .bg-setuju { background: #ecfdf5; color: #047857; }
+    .bg-tolak { background: #fef2f2; color: #b91c1c; }
+    .bg-selesai { background: #eff6ff; color: #1d4ed8; }
 
-.btn:hover{
-background:#198754;
-transform:translateY(-2px);
-}
+    /* ===== TIMELINE TRACKER ===== */
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+        border-left: 2px dashed #e2e8f0;
+        margin-left: 10px;
+    }
 
-/* ===== STATUS BOX ===== */
-.status-box{
-background:white;
-padding:25px;
-border-radius:15px;
-border:1px solid #eee;
-width:350px;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
-}
+    .timeline-item {
+        position: relative;
+        padding-bottom: 30px;
+    }
 
-/* ===== STATUS BADGE ===== */
-.status-menunggu{color:#ff9800;font-weight:bold;}
-.status-approve{color:#198754;font-weight:bold;}
-.status-tolak{color:#dc3545;font-weight:bold;}
-.status-selesai{color:#0d6efd;font-weight:bold;}
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -39px;
+        top: 0;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: white;
+        border: 3px solid var(--pine-light);
+    }
 
-/* ===== ALERT ===== */
-.alert{
-padding:12px;
-border-radius:8px;
-margin-top:10px;
-}
-.alert-error{
-background:#f8d7da;
-color:#721c24;
-}
+    .timeline-item.active::before {
+        background: var(--pine-light);
+        box-shadow: 0 0 0 5px rgba(5, 150, 105, 0.2);
+    }
 
-/* ===== RIWAYAT ===== */
-.history{
-padding:20px 0 50px;
-}
+    .timeline-date {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #94a3b8;
+        text-transform: uppercase;
+    }
 
-.history h3{
-margin-bottom:20px;
-text-align:center;
-}
-
-.history-item{
-background:white;
-padding:15px;
-margin-bottom:12px;
-border-left:5px solid #1f9b74;
-border-radius:8px;
-box-shadow:0 5px 15px rgba(0,0,0,0.05);
-transition:.3s;
-}
-
-.history-item:hover{
-transform:translateX(5px);
-}
-
-/* ===== ANIMASI ===== */
-@keyframes rotateBg{
-from{transform:rotate(0deg);}
-to{transform:rotate(360deg);}
-}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:768px){
-.container-status{
-flex-direction:column;
-align-items:center;
-}
-}
+    .timeline-content {
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
 
 </style>
 
-
-<!-- HERO -->
 <div class="banner">
-<h1>STATUS PEMINJAMAN ARSIP</h1>
-<p>Cek perkembangan permohonan Anda secara real-time</p>
+    <div class="container">
+        <h1>Lacak Permohonan</h1>
+        <p>Pantau transparansi layanan peminjaman arsip Anda secara langsung</p>
+    </div>
 </div>
 
+<div class="container" style="margin-top: -60px; position: relative; z-index: 100;">
+    <div class="row g-4 justify-content-center">
+        
+        <div class="col-lg-4">
+            <div class="cek-box">
+                <h5 class="fw-800 mb-2">Cari Nomor Antrean</h5>
+                <p class="small text-muted">Masukkan nomor permohonan yang diberikan saat pendaftaran.</p>
+                
+                <form method="POST" action="/pemohon/status/cek">
+                    @csrf
+                    <div class="input-group-custom">
+                        <i class="bi bi-ticket-perforated"></i>
+                        <input type="text" name="nomor" placeholder="PNM-2026-XXXX" required>
+                    </div>
+                    <button class="btn-cek">
+                        <i class="bi bi-search"></i> Periksa Sekarang
+                    </button>
+                </form>
 
-<div class="container">
+                @if(session('warning'))
+                    <div class="alert mt-3 py-2 small d-flex align-items-center gap-2" style="background: #fff1f2; color: #9f1239; border-radius: 12px; border: none;">
+                        <i class="bi bi-exclamation-circle-fill"></i> {{ session('warning') }}
+                    </div>
+                @endif
+            </div>
+        </div>
 
-<div class="container-status">
+        <div class="col-lg-6">
+            <div class="status-card">
+                @if(!empty($data))
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h6 class="text-muted fw-bold small text-uppercase mb-1">Informasi Terkini</h6>
+                            <h4 class="fw-800 m-0">{{ $data->nomor_permohonan }}</h4>
+                        </div>
+                        
+                        @php
+                            $status_class = [
+                                'menunggu' => 'bg-menunggu',
+                                'disetujui' => 'bg-setuju',
+                                'ditolak' => 'bg-tolak',
+                                'selesai' => 'bg-selesai'
+                            ][$data->status] ?? 'bg-menunggu';
+                            
+                            $status_icon = [
+                                'menunggu' => 'bi-clock-history',
+                                'disetujui' => 'bi-check-circle',
+                                'ditolak' => 'bi-x-circle',
+                                'selesai' => 'bi-flag'
+                            ][$data->status] ?? 'bi-info-circle';
+                        @endphp
 
-<!-- FORM -->
-<div class="cek-box">
+                        <span class="badge-status {{ $status_class }}">
+                            <i class="bi {{ $status_icon }}"></i> {{ ucfirst($data->status) }}
+                        </span>
+                    </div>
 
-<h4 class="fw-bold">Cek Status</h4>
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <label class="small text-muted d-block">Nama Pemohon</label>
+                            <span class="fw-bold">{{ $data->nama_pemohon }}</span>
+                        </div>
+                        <div class="col-6 text-end">
+                            <label class="small text-muted d-block">Tanggal Pengajuan</label>
+                            <span class="fw-bold">{{ date('d M Y', strtotime($data->created_at)) }}</span>
+                        </div>
+                    </div>
 
-<p style="font-size:13px;color:#0f5f3a;">
-Gunakan nomor permohonan yang Anda terima
-</p>
+                    <hr class="my-4 opacity-50">
 
-<form method="POST" action="/pemohon/status/cek">
-@csrf
+                    <h6 class="fw-800 mb-4"><i class="bi bi-list-stars me-2"></i> Log Perkembangan</h6>
+                    
+                    @if(!empty($riwayat) && count($riwayat) > 0)
+                        <div class="timeline">
+                            @foreach($riwayat as $index => $r)
+                                <div class="timeline-item {{ $index === 0 ? 'active' : '' }}">
+                                    <div class="timeline-date">{{ date('d M Y, H:i', strtotime($r->created_at)) }}</div>
+                                    <div class="timeline-content">{{ $r->catatan }}</div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-4 bg-light rounded-4">
+                            <i class="bi bi-hourglass-split text-muted display-6"></i>
+                            <p class="text-muted small mt-2">Belum ada pembaruan log untuk permohonan ini.</p>
+                        </div>
+                    @endif
 
-<input type="text" name="nomor" placeholder="Contoh: PNM-JK-001/03/2026" required>
+                @else
+                    <div class="text-center py-5">
+                        <img src="https://cdn-icons-png.flaticon.com/512/10515/10515159.png" style="width: 120px; opacity: 0.3;" class="mb-3">
+                        <h5 class="fw-bold text-muted">Belum Ada Data</h5>
+                        <p class="text-muted small px-lg-5">Silakan masukkan nomor permohonan Anda di kolom sebelah kiri untuk melihat status terbaru.</p>
+                    </div>
+                @endif
+            </div>
+        </div>
 
-<button class="btn">Cek Status</button>
-
-</form>
-
-@if(session('warning'))
-<div class="alert alert-error">
-{{ session('warning') }}
+    </div>
 </div>
-@endif
-
-</div>
-
-
-<!-- HASIL -->
-<div class="status-box">
-
-@if(!empty($data))
-
-<h4 class="fw-bold mb-3">Status Permohonan</h4>
-
-<p><b>Nomor:</b> {{ $data->nomor_permohonan }}</p>
-<p><b>Nama:</b> {{ $data->nama_pemohon }}</p>
-<p><b>Tanggal:</b> {{ date('d-m-Y', strtotime($data->created_at)) }}</p>
-
-<hr>
-
-@if($data->status == 'menunggu')
-<p class="status-menunggu">⏳ Menunggu Persetujuan</p>
-@endif
-
-@if($data->status == 'disetujui')
-<p class="status-approve">✔ Disetujui</p>
-@endif
-
-@if($data->status == 'ditolak')
-<p class="status-tolak">✖ Ditolak</p>
-@endif
-
-@if($data->status == 'selesai')
-<p class="status-selesai">✔ Selesai</p>
-@endif
-
-@else
-<p class="text-muted">Silakan masukkan nomor permohonan.</p>
-@endif
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- RIWAYAT -->
-@if(!empty($riwayat) && count($riwayat) > 0)
-
-<div class="container history">
-
-<h3 class="fw-bold">Riwayat Permohonan</h3>
-
-@foreach($riwayat as $r)
-
-<div class="history-item">
-
-<b>{{ strtoupper($r->status) }}</b><br>
-
-{{ $r->catatan }}<br>
-
-<small>{{ date('d-m-Y H:i', strtotime($r->created_at)) }}</small>
-
-</div>
-
-@endforeach
-
-</div>
-
-@endif
 
 @endsection

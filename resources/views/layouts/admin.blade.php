@@ -1,306 +1,339 @@
 <!DOCTYPE html>
-<html>
+@php
+    $notifPermohonan = \DB::table('pemohons')->where('status','menunggu')->count();
+    $notifPesan = \DB::table('kontaks')->whereNull('balasan')->count();
+@endphp
+<html lang="id">
 <head>
-    <title>Admin Panel</title>
+    <title>Admin Panel - DPK Provinsi Bengkulu</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- FONT -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <!-- ICON -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body{
-            margin:0;
-            font-family:'Inter', sans-serif;
-            background:#f4f6f9;
+        :root {
+            --pine-green: #0f5d3f;
+            --pine-dark: #0b4a32;
+            --slate-950: #020617;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-100: #f1f5f9;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* HEADER */
-        .top-header{
-            background:linear-gradient(90deg,#0f5d3f,#0b4a32);
-            color:white;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            padding:12px 25px;
-            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: var(--slate-900);
+            overflow-x: hidden;
         }
 
-        .header-left{
-            display:flex;
-            align-items:center;
-            gap:10px;
+        /* --- Loading Screen --- */
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
         }
 
-        .logo{
-            width:42px;
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid var(--pine-green);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
 
-        .instansi{ font-weight:600; }
-        .provinsi{ font-size:13px; opacity:0.8; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* LAYOUT */
-        .layout{ display:flex; }
-
-        /* SIDEBAR */
-        .sidebar{
-            width:240px;
-            background:#0f172a;
-            min-height:100vh;
-            padding:20px;
-            display:flex;
-            flex-direction:column;
-            justify-content:space-between;
-            transition:0.3s;
+        /* --- Top Header --- */
+        .top-header {
+            background: linear-gradient(135deg, var(--pine-green), var(--pine-dark));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 25px;
+            height: 70px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1001;
         }
 
-        .sidebar.collapsed{ width:70px; }
-
-        .sidebar a{
-            display:flex;
-            align-items:center;
-            gap:10px;
-            color:#cbd5e1;
-            text-decoration:none;
-            padding:10px 12px;
-            border-radius:10px;
-            transition:0.2s;
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .sidebar a:hover{
-            background:#1e293b;
-            transform:translateX(5px);
+        .logo { width: 40px; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .instansi { font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: 14px; line-height: 1.1; letter-spacing: -0.2px; }
+        .provinsi { font-size: 11px; opacity: 0.85; letter-spacing: 1.5px; margin-top: 2px; text-transform: uppercase; }
+
+        /* --- Layout Structure --- */
+        .layout { display: flex; min-height: calc(100vh - 70px); }
+
+        /* --- Sidebar Modern --- */
+        .sidebar {
+            width: 270px;
+            background: var(--slate-950);
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            z-index: 1000;
         }
 
-        .sidebar a.active{
-            background:#0f5d3f;
-            color:white;
+        .sidebar.collapsed { width: 88px; }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 6px;
+            transition: var(--transition);
+            white-space: nowrap;
+            font-weight: 500;
+            font-size: 14.5px;
         }
 
-        .sidebar.collapsed a span{ display:none; }
-        .sidebar.collapsed a{ justify-content:center; }
+        .sidebar a i { width: 22px; text-align: center; font-size: 18px; }
 
-        /* CONTENT */
-        .content{
-            flex:1;
-            padding:30px;
-            animation:fadeIn .4s ease;
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+            transform: translateX(4px);
         }
 
-        /* CARD */
-        .card{
-            border:none;
-            border-radius:14px;
-            box-shadow:0 8px 20px rgba(0,0,0,0.05);
-            transition:.3s;
-        }
-        .card:hover{
-            transform:translateY(-5px);
-            box-shadow:0 12px 25px rgba(0,0,0,0.08);
+        .sidebar a.active {
+            background: var(--pine-green);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(15, 93, 63, 0.25);
         }
 
-        /* TABLE */
-        .table thead{
-            background:#0f5d3f;
-            color:white;
-        }
-        .table tbody tr:hover{
-            background:#f1f5f9;
+        .badge-notif {
+            font-size: 10px;
+            padding: 3px 7px;
+            border-radius: 8px;
+            font-weight: 800;
         }
 
-        /* BUTTON */
-        .btn{
-            border-radius:8px;
-            transition:.2s;
-        }
-        .btn:hover{
-            transform:scale(1.03);
+        .sidebar.collapsed a span { display: none; }
+        .sidebar.collapsed a { justify-content: center; padding: 15px; }
+        .sidebar.collapsed .logout-text { display: none; }
+
+        /* --- Content Area --- */
+        .content {
+            flex: 1;
+            padding: 35px;
+            background: #f8fafc;
+            animation: fadeIn 0.4s ease-out;
         }
 
-        /* ANIMATION */
-        @keyframes fadeIn{
-            from{opacity:0; transform:translateY(10px);}
-            to{opacity:1; transform:translateY(0);}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes spin{
-            100%{transform:rotate(360deg);}
+        /* --- UI Feedback Elements --- */
+        #successAnim {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            display: none;
+            z-index: 10000;
+            text-align: center;
+            min-width: 220px;
         }
 
-        /* LOADING */
-        #loading{
-            position:fixed;
-            width:100%;
-            height:100%;
-            background:white;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            z-index:9999;
+        #toastBox { position: fixed; top: 85px; right: 25px; z-index: 9999; }
+        .custom-toast {
+            background: white;
+            color: var(--slate-900);
+            padding: 16px 24px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border-left: 6px solid var(--pine-green);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* SUCCESS POPUP */
-        #successAnim{
-            position:fixed;
-            top:50%;
-            left:50%;
-            transform:translate(-50%,-50%);
-            background:white;
-            padding:30px;
-            border-radius:12px;
-            box-shadow:0 10px 25px rgba(0,0,0,0.2);
-            display:none;
-            z-index:9999;
-            text-align:center;
-        }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* PAGINATION */
-        .pagination svg{
-            width:16px !important;
+        /* --- Modal Styling --- */
+        .modal-content { border-radius: 24px; border: none; }
+        .btn-confirm-logout {
+            background: #e11d48;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: 0.2s;
         }
+        .btn-confirm-logout:hover { background: #be123c; transform: translateY(-2px); }
     </style>
 </head>
 <body>
 
-<!-- LOADING -->
 <div id="loading">
-    <div style="
-        width:40px;
-        height:40px;
-        border:4px solid #ddd;
-        border-top:4px solid #0f5d3f;
-        border-radius:50%;
-        animation:spin 1s linear infinite;">
-    </div>
+    <div class="spinner"></div>
 </div>
 
-<!-- SUCCESS -->
 <div id="successAnim">
-    <div style="font-size:40px;color:#16a34a;">✔</div>
-    <div style="margin-top:10px;font-weight:bold;">Berhasil</div>
+    <div style="font-size:60px; color:#22c55e;"><i class="fa-solid fa-circle-check"></i></div>
+    <div style="margin-top:15px; font-weight:800; font-family:'Plus Jakarta Sans'; font-size: 18px; color: var(--slate-900);">BERHASIL</div>
 </div>
 
-<!-- HEADER -->
 <div class="top-header">
     <div class="header-left">
-        <button onclick="toggleSidebar()" style="background:none;border:none;color:white;font-size:18px;">
-            <i class="fa-solid fa-bars"></i>
+        <button onclick="toggleSidebar()" class="btn btn-link text-white p-0 me-3 shadow-none" style="font-size: 20px; transition: 0.3s;">
+            <i class="fa-solid fa-bars-staggered"></i>
         </button>
-
-        <img src="{{ asset('images/logo.png') }}" class="logo">
-
+        <img src="{{ asset('images/logo.png') }}" class="logo" alt="Logo">
         <div>
             <div class="instansi">DINAS PERPUSTAKAAN DAN KEARSIPAN</div>
             <div class="provinsi">PROVINSI BENGKULU</div>
         </div>
     </div>
-
-    <div>
-        <i class="fa-solid fa-user-shield"></i> Admin
+    <div class="d-flex align-items-center">
+        <div class="badge bg-white bg-opacity-10 text-white p-2 px-3 d-flex align-items-center gap-2" style="border-radius: 10px; border: 1px solid rgba(255,255,255,0.2);">
+            <i class="fa-solid fa-user-shield text-warning"></i>
+            <span class="small fw-bold">Administrator</span>
+        </div>
     </div>
 </div>
 
 <div class="layout">
-
     <div class="sidebar">
-
-        <div>
+        <div class="flex-grow-1">
             <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard')?'active':'' }}">
-                <i class="fa-solid fa-gauge"></i><span>Dashboard</span>
+                <i class="fa-solid fa-chart-line"></i><span>Dashboard</span>
             </a>
-
-            <a href="{{ route('admin.kelola') }}" class="{{ request()->routeIs('admin.kelola')?'active':'' }}">
-                <i class="fa-solid fa-folder-open"></i><span>Kelola</span>
+            
+            <a href="{{ route('admin.kelola') }}" class="position-relative {{ request()->routeIs('admin.kelola')?'active':'' }}">
+                <i class="fa-solid fa-box-archive"></i>
+                <span>Kelola Arsip</span>
+                @if($notifPermohonan > 0)
+                    <span class="badge bg-danger badge-notif position-absolute" style="top: 12px; right: 15px;">{{ $notifPermohonan }}</span>
+                @endif
             </a>
 
             <a href="{{ route('admin.jadwal') }}" class="{{ request()->routeIs('admin.jadwal')?'active':'' }}">
-                <i class="fa-solid fa-calendar-days"></i><span>Jadwal</span>
+                <i class="fa-solid fa-calendar-check"></i><span>Jadwal Peminjaman</span>
             </a>
 
-            <a href="{{ route('admin.laporan') }}" class="{{ request()->routeIs('admin.laporan')?'active':'' }}">
-                <i class="fa-solid fa-file-lines"></i><span>Laporan</span>
+            <a href="{{ route('admin.laporan') }}" class="position-relative {{ request()->routeIs('admin.laporan')?'active':'' }}">
+                <i class="fa-solid fa-file-lines"></i>
+                <span>Laporan & Pesan</span>
+                @if($notifPesan > 0)
+                    <span class="badge bg-warning text-dark badge-notif position-absolute" style="top: 12px; right: 15px;">{{ $notifPesan }}</span>
+                @endif
             </a>
         </div>
 
-        <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#logoutModal">
-            Logout
+        <button type="button" class="btn btn-outline-danger border-0 w-100 py-3 text-start d-flex align-items-center gap-3 shadow-none mt-auto" 
+                data-bs-toggle="modal" data-bs-target="#logoutModal" style="border-radius: 12px; color: #fb7185;">
+            <i class="fa-solid fa-right-from-bracket ms-1"></i>
+            <span class="logout-text fw-bold">Logout</span>
         </button>
-
     </div>
 
     <div class="content">
         @yield('content')
     </div>
-
 </div>
 
-<!-- TOAST -->
-<div id="toastBox" style="position:fixed;top:20px;right:20px;z-index:9999;"></div>
+<div id="toastBox"></div>
 
-<!-- LOGOUT MODAL -->
-<div class="modal fade" id="logoutModal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-4">
-        <h4>Konfirmasi Logout</h4>
-        <p>Yakin ingin keluar?</p>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button class="btn btn-danger">Logout</button>
-        </form>
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg">
+            <div class="modal-body p-5 text-center">
+                <div class="mb-4">
+                    <i class="fa-solid fa-triangle-exclamation text-warning" style="font-size: 64px;"></i>
+                </div>
+                <h4 class="fw-800 mb-2" style="font-family: 'Plus Jakarta Sans';">Konfirmasi Keluar</h4>
+                <p class="text-muted mb-4">Apakah Anda yakin ingin mengakhiri sesi administrator ini dan keluar dari sistem?</p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-center">
+                    <button type="button" class="btn btn-light px-4 py-2 fw-bold" data-bs-dismiss="modal" style="border-radius: 12px;">Batal</button>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-confirm-logout text-white px-4 py-2 fw-bold">Ya, Keluar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-
-<script>
-function toggleSidebar(){
-    document.querySelector('.sidebar').classList.toggle('collapsed');
-}
-
-window.onload=function(){
-    document.getElementById("loading").style.display="none";
-
-    @if(session('success'))
-        showToast("{{ session('success') }}");
-    @endif
-
-    @if(session('notif_email'))
-        showToast("📩 Email terkirim");
-    @endif
-
-    @if(session('notif_wa'))
-        showToast("📱 WhatsApp terkirim");
-    @endif
-}
-
-function showToast(msg){
-    showSuccess();
-
-    let t=document.createElement("div");
-    t.innerText=msg;
-    t.style.background="#0f5d3f";
-    t.style.color="white";
-    t.style.padding="10px";
-    t.style.marginTop="10px";
-    t.style.borderRadius="8px";
-
-    document.getElementById("toastBox").appendChild(t);
-    setTimeout(()=>t.remove(),3000);
-}
-
-function showSuccess(){
-    let el=document.getElementById("successAnim");
-    el.style.display="block";
-    setTimeout(()=>el.style.display="none",1200);
-}
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Sidebar Toggle
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('collapsed');
+    }
+
+    // Loader & Flash Notifications
+    window.onload = function() {
+        setTimeout(() => {
+            document.getElementById("loading").style.fadeOut = "slow";
+            document.getElementById("loading").style.display = "none";
+        }, 300);
+
+        @if(session('success'))
+            showToast("{{ session('success') }}");
+        @endif
+
+        @if(session('notif_email'))
+            showToast("📩 Email Berhasil Dikirim");
+        @endif
+    }
+
+    // Modern Toast & Success Feedback
+    function showToast(msg) {
+        showSuccess();
+        const t = document.createElement("div");
+        t.className = "custom-toast";
+        t.innerHTML = `<i class="fa-solid fa-check-circle text-success" style="font-size: 20px;"></i> ${msg}`;
+        document.getElementById("toastBox").appendChild(t);
+        
+        setTimeout(() => { 
+            t.style.opacity = '0'; 
+            t.style.transform = 'translateX(20px)';
+            setTimeout(() => t.remove(), 400); 
+        }, 4000);
+    }
+
+    function showSuccess() {
+        const el = document.getElementById("successAnim");
+        el.style.display = "block";
+        setTimeout(() => el.style.display = "none", 1200);
+    }
+</script>
 
 </body>
 </html>

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PemohonController;
+// ✅ FIX 1: Tambahkan ini jika kamu memang punya LaporanController
+// use App\Http\Controllers\LaporanController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -39,27 +41,18 @@ Route::post('/logout', function () {
 Route::prefix('pemohon')->group(function () {
 
     Route::get('/', [PemohonController::class, 'beranda'])->name('pemohon.beranda');
-
     Route::get('/informasi', [PemohonController::class, 'informasi'])->name('pemohon.informasi');
-
     Route::get('/peminjaman', [PemohonController::class, 'peminjaman'])->name('pemohon.peminjaman');
-
-    Route::post('/peminjaman/simpan', [PemohonController::class, 'simpanPeminjaman'])
-        ->name('pemohon.peminjaman.simpan');
+    Route::post('/peminjaman/simpan', [PemohonController::class, 'simpanPeminjaman'])->name('pemohon.peminjaman.simpan');
 
     // STATUS
     Route::get('/status', [PemohonController::class, 'status'])->name('pemohon.status');
     Route::post('/status/cek', [PemohonController::class, 'cekStatus'])->name('pemohon.status.cek');
-
-    Route::get('/status/riwayat/{id}', [PemohonController::class, 'riwayat'])
-        ->name('pemohon.riwayat');
+    Route::get('/status/riwayat/{id}', [PemohonController::class, 'riwayat'])->name('pemohon.riwayat');
 
     // KONTAK
     Route::get('/kontak', [PemohonController::class, 'kontak'])->name('pemohon.kontak');
-
-    // ✅ FIX PENTING (PINDAH KE SINI)
-    Route::post('/kontak/kirim', [PemohonController::class, 'kirimKontak'])
-        ->name('pemohon.kontak.kirim');
+    Route::post('/kontak/kirim', [PemohonController::class, 'kirimKontak'])->name('pemohon.kontak.kirim');
 });
 
 
@@ -83,7 +76,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/setujui/{id}', [AdminController::class, 'setujui'])->name('admin.setujui');
     Route::get('/tolak/{id}', [AdminController::class, 'tolak'])->name('admin.tolak');
     Route::get('/selesai/{id}', [AdminController::class, 'selesai'])->name('admin.selesai');
-
     Route::get('/notif/{id}', [AdminController::class, 'kirimNotifikasi'])->name('admin.notif');
 
     // LAPORAN
@@ -91,11 +83,16 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/laporan/pdf', [AdminController::class, 'laporanPdf'])->name('admin.laporan.pdf');
     Route::get('/laporan/excel', [AdminController::class, 'laporanExcel'])->name('admin.laporan.excel');
 
-    // HAPUS (GET BIAR GA ERROR)
+    // HAPUS PERMOHONAN
     Route::get('/hapus/{id}', [AdminController::class, 'hapus'])->name('admin.hapus');
 
     // JADWAL
     Route::get('/jadwal', [AdminController::class, 'jadwal'])->name('admin.jadwal');
 
+    // BALAS PESAN
     Route::post('/balas/{id}', [AdminController::class, 'balasPesan'])->name('admin.balas');
+    
+    // ✅ FIX 2: Ubah LaporanController menjadi AdminController 
+    // Agar fungsi hapus pesan dikelola di satu tempat yang sama
+    Route::delete('/kontak/{id}', [AdminController::class, 'destroyKontak'])->name('admin.kontak.destroy');
 });

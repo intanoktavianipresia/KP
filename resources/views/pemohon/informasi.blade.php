@@ -2,378 +2,316 @@
 
 @section('content')
 
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 <style>
+    :root {
+        --primary-dark: #064e3b;
+        --primary-main: #059669;
+        --primary-gradient: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+        --accent-gold: #d4af37;
+        --text-main: #1e293b;
+        --bg-soft: #f8fafc;
+    }
 
-/* ===== BACKGROUND HALUS ===== */
-body{
-background:linear-gradient(180deg,#f6f9f8,#ffffff);
-}
+    body {
+        background-color: var(--bg-soft);
+        color: var(--text-main);
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        overflow-x: hidden;
+    }
 
-/* HERO INFORMASI PREMIUM */
-.hero-informasi{
-position:relative;
-background:linear-gradient(135deg,#0b3d2e,#1f9b74);
-padding:80px 20px;
-text-align:center;
-color:white;
-overflow:hidden;
-}
+    /* ===== HERO SECTION WITH ANIMATED OVERLAY ===== */
+    .hero-informasi {
+        position: relative;
+        background: var(--primary-gradient);
+        padding: 120px 20px 160px;
+        text-align: center;
+        color: white;
+        overflow: hidden;
+    }
 
-/* efek layer transparan */
-.hero-informasi::before{
-content:'';
-position:absolute;
-width:200%;
-height:200%;
-top:-50%;
-left:-50%;
-background:radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
-animation:rotateBg 12s linear infinite;
-}
+    .hero-informasi::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: url('https://www.transparenttextures.com/patterns/cubes.png');
+        opacity: 0.1;
+    }
 
-/* container isi */
-.hero-content{
-position:relative;
-z-index:2;
-max-width:900px;
-margin:auto;
-}
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 900px;
+        margin: auto;
+    }
 
-/* JUDUL */
-.hero-informasi h1{
-font-size:46px;
-font-weight:900;
-letter-spacing:4px;
-line-height:1.3;
-text-transform:uppercase;
+    .hero-informasi h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 800;
+        letter-spacing: -1px;
+        line-height: 1.2;
+        margin-bottom: 20px;
+    }
 
-background:linear-gradient(to bottom,#ffffff,#cfe9df);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+    /* Decorative Curve */
+    .hero-curve {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        background: var(--bg-soft);
+        clip-path: ellipse(60% 100% at 50% 100%);
+    }
 
-text-shadow:0 5px 25px rgba(0,0,0,0.4);
+    /* ===== MAIN CONTENT CARD ===== */
+    .content-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid white;
+        border-radius: 30px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+        padding: 50px;
+        margin-top: -100px;
+        position: relative;
+        z-index: 10;
+    }
 
-animation:fadeUp 1s ease;
-}
+    .info-text p {
+        font-size: 1.15rem;
+        line-height: 1.8;
+        color: #475569;
+    }
 
-/* SUBTITLE */
-.hero-informasi p{
-margin-top:15px;
-font-size:20px;
-opacity:.9;
-animation:fadeUp 1.2s ease;
-}
+    /* ===== CATEGORY BADGES (INTERACTIVE) ===== */
+    .badge-jenis {
+        padding: 12px 28px;
+        border-radius: 16px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        background: white;
+        border: 1px solid #e2e8f0;
+        cursor: default;
+    }
 
-/* garis bawah elegan */
-.hero-informasi h1::after{
-content:'';
-display:block;
-width:120px;
-height:5px;
-background:white;
-margin:18px auto 0;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.3);
-}
+    .badge-jenis:hover {
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        border-color: var(--primary-main);
+    }
 
-/* animasi */
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(30px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
+    /* ===== TATA TERTIB SECTIONS ===== */
+    .tata-box {
+        background: white;
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04);
+        position: relative;
+        overflow: hidden;
+    }
 
-@keyframes rotateBg{
-from{transform:rotate(0deg);}
-to{transform:rotate(360deg);}
-}
+    .tata-box::after {
+        content: "RULES";
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        font-size: 5rem;
+        font-weight: 900;
+        color: rgba(0,0,0,0.03);
+        pointer-events: none;
+    }
 
-/* ===== DESKRIPSI ===== */
-.info-box{
-background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 10px 30px rgba(0,0,0,0.06);
-margin-top:30px;
-transition:.4s;
-animation:fadeUp 1s ease;
-}
+    .tata-box li {
+        margin-bottom: 15px;
+        padding-left: 10px;
+        transition: 0.3s;
+    }
 
-.info-box:hover{
-transform:translateY(-5px);
-box-shadow:0 15px 40px rgba(0,0,0,0.1);
-}
+    .tata-box li:hover {
+        color: var(--primary-main);
+        transform: translateX(5px);
+    }
 
-.info-box p{
-font-size:17px;
-line-height:1.9;
-text-align:justify;
-}
+    /* ===== MODERN STEPS (ALUR) ===== */
+    .step-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 50px;
+    }
 
-/* ===== JENIS ===== */
-.jenis-box{
-display:flex;
-flex-direction:column;
-align-items:center;
-margin:50px 0;
-animation:fadeUp 1.2s ease;
-}
+    .step-item {
+        flex: 1;
+        text-align: center;
+        position: relative;
+    }
 
-.jenis-row{
-display:flex;
-gap:40px;
-margin:10px 0;
-}
+    .step-icon {
+        width: 70px;
+        height: 70px;
+        background: white;
+        border: 2px solid #e2e8f0;
+        color: var(--primary-main);
+        border-radius: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 1.5rem;
+        font-weight: 800;
+        transition: 0.4s;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
 
-.jenis-btn{
-padding:12px 45px;
-border-radius:10px;
-font-weight:600;
-background:white;
-transition:.3s;
-cursor:pointer;
-}
+    .step-item:hover .step-icon {
+        background: var(--primary-main);
+        color: white;
+        border-color: var(--primary-main);
+        transform: rotate(10deg);
+    }
 
-.jenis-btn:hover{
-transform:translateY(-6px) scale(1.05);
-box-shadow:0 12px 25px rgba(0,0,0,0.12);
-}
+    .step-label {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--primary-dark);
+    }
 
-/* WARNA LEBIH HIDUP */
-.video{border:2px solid #2563eb;}
-.tekstual{border:2px solid #ec4899;}
-.peta{border:2px solid #22c55e;}
-.foto{border:2px solid #ef4444;}
+    /* Tombol Katalog Modern */
+    .btn-katalog {
+        background: var(--primary-gradient);
+        color: white;
+        padding: 16px 40px;
+        border-radius: 50px;
+        text-decoration: none !important;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        transition: 0.4s;
+        box-shadow: 0 15px 35px rgba(5, 150, 105, 0.3);
+    }
 
-.jenis-title{
-background:linear-gradient(45deg,#7db7d8,#bcdff5);
-padding:12px 40px;
-border-radius:30px;
-font-weight:600;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
+    .btn-katalog:hover {
+        transform: scale(1.05);
+        box-shadow: 0 20px 45px rgba(5, 150, 105, 0.4);
+        color: white;
+    }
 
-/* ===== TATA ===== */
-.tata-box{
-border:2px solid #3dbd67;
-padding:25px;
-border-radius:10px;
-margin-top:20px;
-background:white;
-box-shadow:0 8px 25px rgba(0,0,0,0.05);
-animation:fadeUp 1.3s ease;
-}
-
-/* ===== ALUR ===== */
-.alur-section{
-margin-top:70px;
-text-align:center;
-animation:fadeUp 1.4s ease;
-}
-
-.alur-judul{
-font-size:28px;
-font-weight:700;
-margin-bottom:10px;
-color:#0f5d3f;
-}
-
-.alur-sub{
-margin-bottom:35px;
-}
-
-/* GRID */
-.alur-grid{
-display:grid;
-grid-template-columns: repeat(5, auto);
-gap:15px;
-justify-content:center;
-align-items:center;
-}
-
-/* BOX */
-.box{
-padding:12px 25px;
-border-radius:10px;
-font-weight:600;
-transition:.3s;
-}
-
-/* WARNA GRADIENT */
-.form{background:linear-gradient(45deg,#fca5a5,#fecaca);}
-.verifikasi{background:linear-gradient(45deg,#fde68a,#fef3c7);}
-.jadwal{background:linear-gradient(45deg,#f9a8d4,#fbcfe8);}
-.layanan{background:linear-gradient(45deg,#86efac,#bbf7d0);}
-.selesai{background:linear-gradient(45deg,#93c5fd,#bfdbfe);}
-
-/* HOVER */
-.box:hover{
-transform:scale(1.08);
-box-shadow:0 12px 30px rgba(0,0,0,0.15);
-}
-
-/* PANAH */
-.arrow{
-font-size:26px;
-font-weight:bold;
-color:#166534;
-animation:blink 1.5s infinite;
-}
-
-/* POSISI */
-.form{grid-column:1;}
-.arrow1{grid-column:2;}
-.verifikasi{grid-column:3;}
-.arrow2{grid-column:4;}
-.jadwal{grid-column:5;}
-
-.arrow3{grid-column:5; grid-row:2;}
-.layanan{grid-column:5; grid-row:3;}
-
-.arrow4{grid-column:5; grid-row:4;}
-.selesai{grid-column:5; grid-row:5;}
-
-/* ===== ANIMASI ===== */
-@keyframes fadeUp{
-from{opacity:0; transform:translateY(30px);}
-to{opacity:1; transform:translateY(0);}
-}
-
-@keyframes fadeDown{
-from{opacity:0; transform:translateY(-30px);}
-to{opacity:1; transform:translateY(0);}
-}
-
-@keyframes blink{
-0%,100%{opacity:1;}
-50%{opacity:.4;}
-}
-
+    @media (max-width: 992px) {
+        .step-container { flex-direction: column; align-items: center; }
+        .step-item { width: 100%; max-width: 300px; margin-bottom: 30px; }
+    }
 </style>
 
-
-<!-- ===== JUDUL ===== -->
 <div class="hero-informasi">
-    <div class="hero-content">
-        <h1>Informasi Layanan Peminjaman Arsip Fisik</h1>
-        <p>
-            Layanan resmi untuk mendukung kebutuhan informasi, penelitian,
-            dan administrasi secara profesional dan terintegrasi
-        </p>
+    <div class="hero-content" data-aos="fade-up">
+        <span class="badge mb-3" style="background: rgba(255,255,255,0.2); letter-spacing: 2px;">INFORMASI PUBLIK</span>
+        <h1>Layanan Peminjaman <br> Arsip Fisik Nasional</h1>
+        <p class="opacity-75">Akses sumber sejarah dan administrasi secara transparan, aman, dan profesional untuk masa depan yang lebih akuntabel.</p>
+    </div>
+    <div class="hero-curve"></div>
+</div>
+
+<div class="container mb-5">
+    <div class="content-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="info-text text-center">
+                    <p>Kami menyediakan akses terhadap sumber informasi autentik guna mendukung kegiatan <strong>pendidikan, penelitian,</strong> dan <strong>administrasi kenegaraan</strong>. Setiap prosedur dijalankan dengan standar keamanan tinggi demi menjaga kelestarian aset sejarah bangsa.</p>
+                </div>
+
+                <div class="mt-5">
+                    <h6 class="text-center text-uppercase fw-bold text-muted mb-4" style="letter-spacing: 2px; font-size: 0.8rem;">Kategori Koleksi Arsip</h6>
+                    <div class="jenis-container d-flex justify-content-center flex-wrap gap-3">
+                        <div class="badge-jenis" data-aos="zoom-in" data-aos-delay="300">🎥 <span style="color:#2563eb">Arsip Video</span></div>
+                        <div class="badge-jenis" data-aos="zoom-in" data-aos-delay="400">📄 <span style="color:#db2777">Arsip Tekstual</span></div>
+                        <div class="badge-jenis" data-aos="zoom-in" data-aos-delay="500">🗺️ <span style="color:#059669">Arsip Peta</span></div>
+                        <div class="badge-jenis" data-aos="zoom-in" data-aos-delay="600">🖼️ <span style="color:#d97706">Arsip Foto</span></div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="https://link-web-temanmu.com" target="_blank" class="btn-katalog">
+                        <i class="bi bi-search"></i> Telusuri Katalog Arsip Digital
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 pt-4">
+        <div class="col-12" data-aos="fade-right">
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <div style="width: 50px; height: 3px; background: var(--accent-gold);"></div>
+                <h4 class="fw-800 mb-0" style="color: var(--primary-dark)">Tata Tertib Layanan</h4>
+            </div>
+            <div class="tata-box border-top border-4 border-success">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ol class="fw-500">
+                            <li>Ruang baca khusus untuk akses arsip dan referensi resmi.</li>
+                            <li>Arsip dilarang keras dibawa keluar dari area ruang baca.</li>
+                            <li>Wajib menjaga kebersihan dan memperlakukan arsip dengan hati-hati.</li>
+                            <li>Pengguna bertanggung jawab penuh atas fisik arsip yang dipinjam.</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-6">
+                        <ol start="5" class="fw-500">
+                            <li>Dilarang melipat, mencoret, atau merusak fisik arsip.</li>
+                            <li>Hanya diperbolehkan membawa alat tulis (pensil disarankan).</li>
+                            <li>Tas, jaket, dan makanan wajib disimpan di loker.</li>
+                            <li>Wajib menjaga ketenangan demi kenyamanan bersama.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alur-wrapper mt-5 pt-5">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h4 class="fw-800" style="color: var(--primary-dark)">Alur Prosedur Peminjaman</h4>
+            <p class="text-muted">Proses transparan untuk akses yang lebih mudah</p>
+        </div>
+        
+        <div class="step-container">
+            <div class="step-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-icon">01</div>
+                <div class="step-label">Registrasi & <br> Formulir Digital</div>
+            </div>
+            <div class="step-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-icon">02</div>
+                <div class="step-label">Verifikasi & <br> Validasi Petugas</div>
+            </div>
+            <div class="step-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-icon">03</div>
+                <div class="step-label">Penjadwalan <br> Kunjungan</div>
+            </div>
+            <div class="step-item" data-aos="fade-up" data-aos-delay="400">
+                <div class="step-icon">04</div>
+                <div class="step-label">Akses Arsip di <br> Ruang Layanan</div>
+            </div>
+            <div class="step-item" data-aos="fade-up" data-aos-delay="500">
+                <div class="step-icon">05</div>
+                <div class="step-label">Penyerahan <br> Kembali & Selesai</div>
+            </div>
+        </div>
     </div>
 </div>
 
-
-<div class="container">
-
-<!-- ===== DESKRIPSI ===== -->
-<div class="info-box">
-
-<p>
-Layanan peminjaman arsip fisik merupakan layanan yang disediakan untuk mendukung kegiatan pendidikan, penelitian, dan administrasi. Pelaksanaan peminjaman arsip dilakukan sesuai ketentuan yang berlaku dan berada dalam pengawasan petugas arsip.
-</p>
-
-<p>
-Layanan ini diselenggarakan untuk mendukung kebutuhan informasi penelitian dan administrasi dengan tetap memperhatikan ketentuan kearsipan, keamanan arsip, serta tata tertib penggunaan arsip sesuai peraturan yang berlaku.
-</p>
-
-</div>
-
-
-<!-- ===== JENIS ===== -->
-<div class="jenis-box">
-
-<div class="jenis-row">
-<button class="jenis-btn video">Video</button>
-<span class="jenis-title">Jenis Arsip</span>
-<button class="jenis-btn tekstual">Tekstual</button>
-</div>
-
-<div class="jenis-row">
-<button class="jenis-btn peta">Peta</button>
-<button class="jenis-btn foto">Foto</button>
-</div>
-
-<!-- 🔥 TAMBAHAN FINAL (TIDAK MENGUBAH YANG LAIN) -->
-<div style="margin-top:25px;">
-    <a href="https://link-web-temanmu.com" target="_blank" 
-       style="
-        background:linear-gradient(45deg,#0f5d3f,#1f9b74);
-        color:white;
-        padding:10px 25px;
-        border-radius:8px;
-        text-decoration:none;
-        font-weight:600;
-        box-shadow:0 8px 20px rgba(0,0,0,0.1);
-        display:inline-block;
-        transition:.3s;
-       "
-       onmouseover="this.style.transform='scale(1.05)'"
-       onmouseout="this.style.transform='scale(1)'"
-    >
-        🔎 Lihat Katalog Arsip
-    </a>
-</div>
-
-</div>
-
-
-<!-- ===== TATA ===== -->
-<h5 class="text-center mt-4">
-TATA TERTIB DI RUANG LAYANAN ARSIP / RUANG BACA
-</h5>
-
-<div class="tata-box">
-<ol>
-<li>Ruang baca khusus untuk membaca arsip atau referensi lainnya.</li>
-<li>Pengguna dilarang membawa arsip keluar ruang baca.</li>
-<li>Untuk menjaga kelestarian arsip, pengguna wajib memperlakukan arsip dengan hati-hati.</li>
-<li>Pengguna bertanggung jawab atas bahan arsip yang sedang digunakan.</li>
-<li>Pengguna tidak diperkenankan melakukan tindakan yang dapat merusak arsip.</li>
-<li>Pengguna hanya diperkenankan membawa alat tulis di ruang baca.</li>
-<li>Barang seperti tas dan map disimpan di tempat yang disediakan.</li>
-<li>Pengguna tidak diperkenankan makan, minum, atau merokok di ruang baca.</li>
-<li>Pengguna tidak diperkenankan membuat kegaduhan di ruang baca.</li>
-</ol>
-</div>
-
-
-<!-- ===== ALUR ===== -->
-<div class="alur-section">
-
-<div class="alur-judul">
-ALUR PEMINJAMAN
-</div>
-
-<div class="alur-sub">
-Alur peminjaman arsip fisik dilaksanakan melalui tahapan sebagai berikut:
-</div>
-
-<div class="alur-grid">
-
-<div class="box form">Mengisi Form</div>
-<div class="arrow arrow1">→</div>
-<div class="box verifikasi">Verifikasi Oleh Petugas</div>
-<div class="arrow arrow2">→</div>
-<div class="box jadwal">Penjadwalan Kunjungan</div>
-
-<div class="arrow arrow3">↓</div>
-
-<div class="box layanan">Pelayanan Arsip di Ruang Layanan</div>
-
-<div class="arrow arrow4">↓</div>
-
-<div class="box selesai">Selesai</div>
-
-</div>
-
-</div>
-
-</div>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+    });
+</script>
 
 @endsection

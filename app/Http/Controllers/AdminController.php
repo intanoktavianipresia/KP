@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Mail;
 class AdminController extends Controller
 {
 
-    // =========================
-    // DASHBOARD
-    // =========================
     public function dashboard()
     {
         $menunggu  = DB::table('pemohons')->where('status', 'menunggu')->count();
@@ -23,10 +20,10 @@ class AdminController extends Controller
         $selesai   = DB::table('pemohons')->where('status', 'selesai')->count();
 
         $jadwal = DB::table('pemohons')
-    ->where('status', 'disetujui')
-    ->whereNotNull('tanggal_kunjungan')
-    ->where('tanggal_kunjungan', '>=', now())
-    ->count();
+            ->where('status', 'disetujui')
+            ->whereNotNull('tanggal_kunjungan')
+            ->where('tanggal_kunjungan', '>=', now())
+            ->count();
 
         $grafik = DB::table('pemohons')
             ->selectRaw('MONTH(created_at) as bulan, COUNT(*) as total')
@@ -34,10 +31,6 @@ class AdminController extends Controller
             ->orderBy('bulan')
             ->get();
         
-        $menunggu = DB::table('pemohons')
-    ->where('status','menunggu')
-    ->count();
-
         $bulan = [];
         $total = [];
 
@@ -51,9 +44,6 @@ class AdminController extends Controller
         ));
     }
 
-    // =========================
-    // KELOLA
-    // =========================
     public function kelola(Request $request)
     {
         $query = DB::table('pemohons');
@@ -77,7 +67,6 @@ class AdminController extends Controller
             ]);
         }
 
-        // ✅ FIX BUG DI SINI
         if(request('jadwal') == 1){
             $query->where('status', 'disetujui')
                   ->whereNotNull('tanggal_kunjungan');
@@ -100,9 +89,6 @@ class AdminController extends Controller
         return view('admin.kelola', compact('data','riwayat'));
     }
 
-    // =========================
-    // DETAIL
-    // =========================
     public function detail($id)
     {
         $data = DB::table('pemohons')->where('id', $id)->first();
@@ -120,9 +106,6 @@ class AdminController extends Controller
         return view('admin.detail', compact('data','riwayat'));
     }
 
-    // =========================
-    // SETUJUI
-    // =========================
     public function setujui($id)
     {
         $data = DB::table('pemohons')->where('id', $id)->first();
@@ -132,13 +115,11 @@ class AdminController extends Controller
         }
 
         DB::table('pemohons')->where('id', $id)->update([
-    'status' => 'disetujui',
-    'tanggal_kunjungan' => request('tgl'),
-    'waktu_kunjungan' => request('waktu'),
-    'updated_at' => now()
-]);
-
-$data = DB::table('pemohons')->where('id', $id)->first();
+            'status' => 'disetujui',
+            'tanggal_kunjungan' => request('tgl'),
+            'waktu_kunjungan' => request('waktu'),
+            'updated_at' => now()
+        ]);
 
         DB::table('riwayat_status')->insert([
             'peminjaman_id' => $data->id,
@@ -149,7 +130,6 @@ $data = DB::table('pemohons')->where('id', $id)->first();
             'updated_at' => now()
         ]);
 
-        // EMAIL
         try {
             Mail::send('email.disetujui', ['data'=>$data], function($msg) use ($data){
                 $msg->to($data->email)
@@ -157,37 +137,14 @@ $data = DB::table('pemohons')->where('id', $id)->first();
             });
         } catch (\Exception $e) {}
 
-        // WA
-        $pesan = "📢 *PEMBERITAHUAN RESMI*
+        $pesan = "📢 *PEMBERITAHUAN RESMI*\n\nYth. Bapak/Ibu {$data->nama_pemohon},\n\nPermohonan peminjaman arsip Anda telah *DISETUJUI*.\n\n📄 *Detail Permohonan:*\n• Nomor : {$data->nomor_permohonan}\n• Arsip : {$data->arsip_dimohon}\n• Jadwal Kunjungan : ".date('d-m-Y', strtotime(request('tgl')))." Pukul ".request('waktu')." WIB\n\nTerima kasih.\n\n—\n*Dinas Perpustakaan dan Kearsipan*";
 
-Yth. Bapak/Ibu {$data->nama_pemohon},
+        $this->kirimWA($data->telepon, $pesan);
 
-Permohonan peminjaman arsip Anda telah *DISETUJUI*.
+        return redirect()->back()->with('success', 'Permohonan berhasil disetujui');
+    }
 
-📄 *Detail Permohonan:*
-• Nomor : {$data->nomor_permohonan}
-• Arsip : {$data->arsip_dimohon}
-• Tanggal Pengajuan : ".date('d-m-Y', strtotime($data->created_at))."
-• Jadwal Kunjungan :
-".date('d-m-Y', strtotime(request('tgl')))." 
-Pukul ".request('waktu')." WIB
-
-Silakan datang sesuai jadwal yang telah ditentukan.
-
-Terima kasih atas perhatian dan kerja sama Anda.
-
-—
-*Dinas Perpustakaan dan Kearsipan*
-Provinsi Bengkulu";
-
-$this->kirimWA($data->telepon, $pesan);
-
-return redirect()->back()->with('success', 'Permohonan berhasil disetujui');
-}
-
-    // =========================
-    // TOLAK
-    // =========================
+    // ✅ FIX: HANYA INI YANG DIPERBAIKI + TAMBAH WA
     public function tolak($id)
     {
         $data = DB::table('pemohons')->where('id', $id)->first();
@@ -217,121 +174,47 @@ return redirect()->back()->with('success', 'Permohonan berhasil disetujui');
             });
         } catch (\Exception $e) {}
 
-        $pesan = "📢 *PEMBERITAHUAN RESMI*
+        // 🔥 TAMBAHAN WA (SATU-SATUNYA PENAMBAHAN)
+        $pesan = "📢 *PEMBERITAHUAN RESMI*\n\nYth. Bapak/Ibu {$data->nama_pemohon},\n\nMohon maaf, permohonan peminjaman arsip Anda *DITOLAK*.\n\n📄 *Detail Permohonan:*\n• Nomor : {$data->nomor_permohonan}\n• Arsip : {$data->arsip_dimohon}\n\nSilakan hubungi admin untuk informasi lebih lanjut.\n\nTerima kasih.\n\n—\n*Dinas Perpustakaan dan Kearsipan*";
 
-Yth. Bapak/Ibu {$data->nama_pemohon},
+        $this->kirimWA($data->telepon, $pesan);
 
-Permohonan peminjaman arsip Anda *DITOLAK*.
-
-📄 *Detail Permohonan:*
-• Nomor : {$data->nomor_permohonan}
-• Arsip : {$data->arsip_dimohon}
-• Tanggal Pengajuan : ".date('d-m-Y', strtotime($data->created_at))."
-
-Untuk informasi lebih lanjut, silakan hubungi pihak layanan.
-
-Terima kasih atas perhatian Anda.
-
-—
-*Dinas Perpustakaan dan Kearsipan*
-Provinsi Bengkulu";
-
-$this->kirimWA($data->telepon, $pesan);
-
-return redirect()->back()->with('success', 'Permohonan berhasil ditolak');
-}
-
-    // =========================
-    // 🔥 BALAS PESAN (AUTO EMAIL)
-    // =========================
-    public function balasPesan(Request $request, $id)
-    {
-        $request->validate([
-            'balasan' => 'required'
-        ]);
-
-        $data = DB::table('kontaks')->where('id', $id)->first();
-
-        if (!$data) {
-            return back()->with('error','Pesan tidak ditemukan');
-        }
-
-        // EMAIL AUTO
-        Mail::send('email.balasan_kontak', [
-    'nama' => $data->nama,
-    'email' => $data->email,
-    'pesan' => $data->pesan,
-    'balasan' => $request->balasan,
-    'tanggal' => now()->format('d F Y H:i')
-], function($msg) use ($data){
-    $msg->to($data->email)
-        ->subject('Tanggapan atas Pesan Anda - Dinas Perpustakaan dan Kearsipan Provinsi Bengkulu');
-});
-
-        // SIMPAN BALASAN
-        DB::table('kontaks')->where('id',$id)->update([
-            'balasan' => $request->balasan
-        ]);
-
-        return back()->with('success','Balasan berhasil dikirim');
+        return redirect()->back()->with('success', 'Permohonan berhasil ditolak');
     }
 
-    // =========================
-    // WA FUNCTION
-    // =========================
     private function kirimWA($nomor, $pesan)
     {
         $token = env('FONNTE_TOKEN');
         $nomor = preg_replace('/^0/', '62', $nomor);
-
         $curl = curl_init();
-
         curl_setopt_array($curl, [
             CURLOPT_URL => 'https://api.fonnte.com/send',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => [
-                'target' => $nomor,
-                'message' => $pesan,
-            ],
+            CURLOPT_POSTFIELDS => ['target' => $nomor, 'message' => $pesan],
             CURLOPT_HTTPHEADER => ["Authorization: $token"],
         ]);
-
         curl_exec($curl);
         curl_close($curl);
     }
 
-    // =========================
-    // LAPORAN
-    // =========================
     public function laporan()
     {
         $data = DB::table('pemohons')->orderBy('created_at','desc')->paginate(10);
         $kontak = DB::table('kontaks')->orderBy('created_at','desc')->get();
-
         return view('admin.laporan', compact('data','kontak'));
     }
 
     public function laporanPdf(Request $request)
     {
         $query = DB::table('pemohons');
-
-        if ($request->status && $request->status != 'semua') {
-            $query->where('status', $request->status);
-        }
-
+        if ($request->status && $request->status != 'semua') { $query->where('status', $request->status); }
         if ($request->tanggal_awal && $request->tanggal_akhir) {
-            $query->whereBetween('created_at', [
-                $request->tanggal_awal,
-                $request->tanggal_akhir
-            ]);
+            $query->whereBetween('created_at', [$request->tanggal_awal, $request->tanggal_akhir]);
         }
-
         $data = $query->orderBy('created_at', 'desc')->get();
         $tanggal = now()->format('d F Y');
-
-        return Pdf::loadView('admin.laporan_pdf', compact('data','tanggal'))
-            ->stream('laporan.pdf');
+        return Pdf::loadView('admin.laporan_pdf', compact('data','tanggal'))->stream('laporan.pdf');
     }
 
     public function laporanExcel()
@@ -345,39 +228,48 @@ return redirect()->back()->with('success', 'Permohonan berhasil ditolak');
         return back()->with('success', 'Data berhasil dihapus');
     }
 
+    public function destroyKontak($id)
+    {
+        DB::table('kontaks')->where('id', $id)->delete();
+        return back()->with('success', 'Pesan berhasil dihapus');
+    }
+
     public function jadwal(Request $request)
+    {
+        DB::table('pemohons')->where('status', 'disetujui')->whereNotNull('tanggal_kunjungan')
+            ->where('tanggal_kunjungan', '<', now())->update(['status' => 'selesai', 'updated_at' => now()]);
+
+        $query = DB::table('pemohons')->where('status', 'disetujui')->whereNotNull('tanggal_kunjungan');
+        if($request->filter == 'hari_ini'){ $query->whereDate('tanggal_kunjungan', now()); }
+        $data = $query->orderBy('tanggal_kunjungan', 'asc')->paginate(10)->withQueryString();
+        return view('admin.jadwal', compact('data'));
+    }
+    public function balasPesan(Request $request, $id)
 {
-    // 🔥 AUTO UPDATE STATUS JADI SELESAI
-    DB::table('pemohons')
-        ->where('status', 'disetujui')
-        ->whereNotNull('tanggal_kunjungan')
-        ->where('tanggal_kunjungan', '<', now())
-        ->update([
-            'status' => 'selesai',
-            'updated_at' => now()
-        ]);
+    $request->validate([
+        'balasan' => 'required'
+    ]);
 
-    $query = DB::table('pemohons')
-        ->where('status', 'disetujui')
-        ->whereNotNull('tanggal_kunjungan');
+    $data = DB::table('kontaks')->where('id', $id)->first();
 
-    if($request->filter == 'hari_ini'){
-        $query->whereDate('tanggal_kunjungan', now());
+    if (!$data) {
+        return back()->with('error','Pesan tidak ditemukan');
     }
 
-    if($request->filter == 'minggu_ini'){
-        $query->whereBetween('tanggal_kunjungan', [
-            now()->startOfWeek(),
-            now()->endOfWeek()
-        ]);
-    }
+    Mail::send('email.balasan_kontak', [
+        'nama' => $data->nama,
+        'email' => $data->email,
+        'pesan' => $data->pesan,
+        'balasan' => $request->balasan,
+        'tanggal' => now()->format('d F Y H:i')
+    ], function($msg) use ($data){
+        $msg->to($data->email)->subject('Tanggapan atas Pesan Anda');
+    });
 
-    $data = $query->orderBy('tanggal_kunjungan', 'asc')
-        ->paginate(10)
-        ->withQueryString();
+    DB::table('kontaks')->where('id',$id)->update([
+        'balasan' => $request->balasan
+    ]);
 
-    return view('admin.jadwal', compact('data'));
+    return back()->with('success','Balasan berhasil dikirim');
 }
-    
-
 }

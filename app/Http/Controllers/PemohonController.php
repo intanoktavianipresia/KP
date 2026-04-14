@@ -98,7 +98,8 @@ class PemohonController extends Controller
             ]);
 
             return redirect('/pemohon/peminjaman')
-                ->with('success', 'Berhasil! Nomor: '.$nomor);
+    ->with('success', true)
+    ->with('nomor_permohonan', $nomor);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -168,5 +169,11 @@ class PemohonController extends Controller
 
         return back()->with('success', 'Pesan berhasil dikirim');
     }
+    public function destroyKontak($id)
+{
+    $pesan = Kontak::findOrFail($id);
+    $pesan::delete();
 
+    return back()->with('success', 'Pesan berhasil dihapus.');
+}
 }

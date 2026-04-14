@@ -1,337 +1,311 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sistem Peminjaman Arsip | DPK Bengkulu</title>
 
-<title>Sistem Peminjaman Arsip</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #064e3b;
+            --primary-light: #0d7a5d;
+            --accent: #d4af37;
+            --text-dark: #1e293b;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
 
-<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #fcfcfc;
+            margin: 0;
+        }
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap');
+        /* TOP HEADER */
+        .top-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px 0;
+            border-bottom: 3px solid var(--accent);
+        }
 
-body{
-margin:0;
-font-family:'Source Sans 3', sans-serif;
-background:#f5f7f9;
-color:#222;
-}
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-/* HEADER */
+        .header-text strong {
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            display: block;
+            line-height: 1.2;
+            font-weight: 800;
+        }
 
-.top-header{
-background:#0b3d2e;
-color:white;
-padding:10px 0;
-}
+        .header-text small {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
 
-.header-inner{
-display:flex;
-align-items:center;
-padding-left:25px;
-}
+        /* NAVBAR */
+        .navbar-custom {
+            background: white;
+            padding: 0;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.02);
+        }
 
-.logo{
-width:55px;
-margin-right:15px;
-}
+        .navbar-nav .nav-link {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark) !important;
+            padding: 25px 25px !important;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
 
-.header-text strong{
-font-size:18px;
-letter-spacing:0.5px;
-}
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
 
-/* NAVBAR */
+        .navbar-nav .nav-link:hover::after,
+        .navbar-nav .nav-link.active::after {
+            width: 100%;
+        }
 
-.navbar-custom{
-background:#ffffff;
-border-bottom:1px solid #e0e0e0;
-}
+        .navbar-nav .nav-link:hover {
+            color: var(--primary) !important;
+            background: rgba(6, 78, 59, 0.03);
+        }
 
-.nav-inner{
-padding-left:25px;
-}
+        .navbar-nav .nav-link i {
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
 
-.navbar-custom .nav-link{
-font-size:17px;
-font-weight:600;
-margin-right:25px;
-color:#222 !important;
-transition:0.2s;
-}
+        .navbar-nav .nav-link:hover i {
+            transform: translateY(-2px);
+            color: var(--accent);
+        }
 
-.navbar-custom .nav-link:hover{
-color:#0b3d2e !important;
-transform:scale(1.05);
-}
+        main { min-height: 70vh; }
 
-/* HERO */
-.hero{
-position:relative;
-height:85vh;
-background:url('{{ asset("images/gedung.png") }}') center/cover no-repeat;
-display:flex;
-align-items:center;
-z-index:1;
-}
+        /* =========================================
+           FOOTER STYLING (PERBAIKAN SESUAI GAMBAR)
+           ========================================= */
+        .footer {
+            background: #064e3b; /* Hijau Tua Solid */
+            color: white;
+            padding: 70px 0 40px 0;
+            margin-top: 50px;
+        }
 
-.hero::before{
-content:'';
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.65);
-z-index:-1;
-}
+        .footer-logo {
+            width: 80px;
+            margin-bottom: 20px;
+        }
 
-.hero-content{
-position:relative;
-color:white;
-max-width:750px;
-}
+        .footer h6 {
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+            color: white;
+        }
 
-.hero h1{
-font-size:56px;
-font-weight:700;
-line-height:1.2;
-}
+        /* Kotak Jam Layanan Transparan */
+        .jam-layanan-box {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
 
-.hero p{
-font-size:22px;
-line-height:1.9;
-margin-top:20px;
-}
+        .jam-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
 
-.hero .btn{
-margin-top:30px;
-font-size:19px;
-padding:14px 45px;
-}
+        .jam-item:last-child {
+            margin-bottom: 0;
+        }
 
-/* SECTION */
-.section{
-padding:85px 0;
-}
+        /* Kontak & Alamat */
+        .footer-info p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
 
-.section-title{
-text-align:center;
-font-size:38px;
-font-weight:700;
-margin-bottom:55px;
-color:#0b3d2e;
-}
+        .footer-info i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
 
-/* PARAGRAF */
-.section p{
-font-size:21px;
-line-height:2;
-text-align:justify;
-}
+        /* Peta Lokasi dengan Border Emas */
+        .map-container {
+            border: 4px solid var(--accent);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
 
-/* CARD */
-.card-modern{
-background:white;
-padding:45px;
-border:1px solid #e0e0e0;
-border-radius:8px;
-transition:0.3s;
-}
-
-.card-modern:hover{
-box-shadow:0 8px 25px rgba(0,0,0,0.08);
-}
-
-.card-modern i{
-font-size:46px;
-color:#0b3d2e;
-}
-
-.card-modern h5{
-font-size:24px;
-font-weight:700;
-margin-top:15px;
-}
-
-.card-modern p{
-font-size:20px;
-}
-
-/* FOOTER */
-.footer{
-background:#0b3d2e;
-color:white;
-padding:50px 0;
-}
-
-.footer h6{
-font-weight:600;
-margin-bottom:15px;
-}
-
-.footer iframe{
-border-radius:20px;
-box-shadow:0 8px 25px rgba(0,0,0,0.3);
-}
-
-.copyright{
-background:#0f5c3a;
-color:white;
-text-align:center;
-padding:12px;
-font-size:14px;
-}
-
-/* JARAK KE FOOTER */
-footer{
-margin-top:80px !important;
-}
-
-/* TAMBAHAN NAFAS */
-.footer{
-padding-top:60px !important;
-}
-
-/* BIAR TRANSISI HALUS */
-.footer::before{
-content:'';
-display:block;
-height:1px;
-background:linear-gradient(to right, transparent, #ccc, transparent);
-margin-bottom:30px;
-}
-
-</style>
+        .copyright-section {
+            background: #053d2e;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="top-header">
-<div class="d-flex align-items-center ps-5">
+    <header class="top-header">
+        <div class="container-fluid px-5">
+            <div class="brand-wrapper">
+                <img src="{{ asset('images/logo.png') }}" width="60" alt="Logo">
+                <div class="header-text text-white">
+                    <strong>DINAS PERPUSTAKAAN DAN KEARSIPAN</strong>
+                    <small>Provinsi Bengkulu</small>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<img src="{{ asset('images/logo.png') }}" width="40" class="me-2">
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid px-5">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('pemohon') ? 'active' : '' }}" href="{{ url('/pemohon') }}">
+                            <i class="bi bi-house-door-fill"></i> Beranda
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('pemohon/informasi*') ? 'active' : '' }}" href="{{ url('/pemohon/informasi') }}">
+                            <i class="bi bi-journal-text"></i> Prosedur
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('pemohon/peminjaman*') ? 'active' : '' }}" href="{{ url('/pemohon/peminjaman') }}">
+                            <i class="bi bi-file-earmark-arrow-up-fill"></i> Ajukan Peminjaman
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('pemohon/status*') ? 'active' : '' }}" href="{{ url('/pemohon/status') }}">
+                            <i class="bi bi-search-heart-fill"></i> Cek Status
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('pemohon/kontak*') ? 'active' : '' }}" href="{{ url('/pemohon/kontak') }}">
+                            <i class="bi bi-chat-dots-fill"></i> Hubungi Kami
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<div>
-<strong>DINAS PERPUSTAKAAN DAN KEARSIPAN</strong><br>
-PROVINSI BENGKULU
-</div>
+    <main>
+        @yield('content')
+    </main>
 
-</div>
-</div>
+    <footer class="footer">
+        <div class="container-fluid px-5">
+            <div class="row g-5">
+                
+                <div class="col-lg-4">
+                    <img src="{{ asset('images/logo.png') }}" class="footer-logo" alt="Logo">
+                    <h6>Jam Layanan Kearsipan</h6>
+                    <div class="jam-layanan-box">
+                        <div class="jam-item">
+                            <span>Senin - Kamis</span>
+                            <span class="fw-bold">07.45 - 16.15</span>
+                        </div>
+                        <div class="jam-item">
+                            <span>Jumat</span>
+                            <span class="fw-bold">07.45 - 16.45</span>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-lg-4 footer-info">
+                    <h6>Kontak & Alamat</h6>
+                    <p>
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <span>Jl. Mahoni No.12, Padang Jati,<br>Kec. Ratu Samban, Kota Bengkulu<br>Bengkulu 38222</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-telephone-fill"></i>
+                        <span>(0736) 26095</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-envelope-fill"></i>
+                        <span>perpus.bengkulu@gmail.com</span>
+                    </p>
+                </div>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-custom">
-<div class="container">
+                <div class="col-lg-4">
+                    <h6>Peta Lokasi</h6>
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3980.9542456453!2d102.2741!3d-3.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwNDgnMDAuMCJTIDEwMsKwMTYnMjYuOCJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid" 
+                            width="100%" 
+                            height="200" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
 
-<ul class="navbar-nav">
+            </div>
+        </div>
+    </footer>
 
-<li class="nav-item">
-<a class="nav-link" href="{{ url('/pemohon') }}">Beranda</a>
-</li>
+    <div class="copyright-section">
+        © 2026 <strong>DPK Provinsi Bengkulu</strong>. All Rights Reserved.
+    </div>
 
-<li class="nav-item">
-<a class="nav-link" href="{{ url('/pemohon/informasi') }}">Informasi</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="{{ url('/pemohon/peminjaman') }}">Peminjaman</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="{{ url('/pemohon/status') }}">Status</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="{{ url('/pemohon/kontak') }}">Kontak</a>
-</li>
-
-</ul>
-
-</div>
-</nav>
-
-
-<!-- CONTENT HALAMAN -->
-@yield('content')
-
-
-<!-- FOOTER -->
-<footer class="footer">
-<div class="container">
-<div class="row">
-
-<div class="col-md-4 mb-4">
-
-<img src="{{ asset('images/logo.png') }}" width="90">
-
-<p class="mt-3">
-DINAS PERPUSTAKAAN DAN KEARSIPAN<br>
-PROVINSI BENGKULU
-</p>
-
-<h6>Jam Operasional</h6>
-
-<p>
-Senin - Kamis : 07.45 - 16.15<br>
-Jumat : 07.45 - 16.45<br>
-Libur Nasional Tutup
-</p>
-
-</div>
-
-
-<div class="col-md-4 mb-4">
-
-<h6>Kontak</h6>
-
-<p>
-Jl. Mahoni No.12, Padang Jati,<br>
-Kec. Ratu Samban, Kota Bengkulu<br>
-Bengkulu 38222<br><br>
-
-Telp: 0736 26095
-</p>
-
-</div>
-
-
-<div class="col-md-4">
-
-<h6>Lokasi</h6>
-
-<iframe
-src="https://www.google.com/maps?q=Dinas+Perpustakaan+dan+Kearsipan+Provinsi+Bengkulu&hl=id&z=16&output=embed"
-width="100%"
-height="230"
-style="border:0;"
-loading="lazy">
-</iframe>
-
-</div>
-
-</div>
-</div>
-</footer>
-
-
-<div class="copyright">
-© 2026 Dinas Perpustakaan dan Kearsipan Provinsi Bengkulu
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-<script>
-AOS.init({
-duration:1000,
-once:true
-});
-</script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+    </script>
 </body>
 </html>
