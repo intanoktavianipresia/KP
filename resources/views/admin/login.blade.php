@@ -31,7 +31,7 @@
             overflow: hidden;
         }
 
-        /* Sisi Kiri (Form) */
+        /* --- LAYOUT UTAMA --- */
         .left {
             width: 45%;
             background: white;
@@ -39,27 +39,42 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 60px;
+            padding: clamp(20px, 5vw, 60px);
             position: relative;
             z-index: 10;
         }
 
+        .right {
+            width: 55%;
+            background: linear-gradient(135deg, rgba(15, 63, 46, 0.95), rgba(31, 107, 79, 0.9)), 
+                        url('https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=2030&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            position: relative;
+        }
+
+        /* --- KOMPONEN LOGO --- */
         .logo-header {
             position: absolute;
-            top: 50px;
-            left: 60px;
+            top: clamp(30px, 5vh, 50px);
+            left: clamp(24px, 5vw, 60px);
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
         .logo-header img {
-            width: 55px;
+            width: clamp(45px, 6vw, 55px);
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
 
         .logo-header h2 {
-            font-size: 14px;
+            font-size: clamp(12px, 1.5vw, 14px);
             font-weight: 800;
             color: var(--primary);
             letter-spacing: 0.5px;
@@ -68,23 +83,24 @@
 
         .logo-header small {
             display: block;
-            font-size: 11px;
+            font-size: clamp(9px, 1.2vw, 11px);
             color: var(--text-muted);
             font-weight: 500;
             text-transform: uppercase;
         }
 
+        /* --- FORM LOGIN --- */
         .login-container {
             width: 100%;
             max-width: 400px;
         }
 
         .login-header {
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
 
         .login-header h3 {
-            font-size: 32px;
+            font-size: clamp(24px, 4vw, 32px);
             font-weight: 800;
             color: var(--text-main);
             letter-spacing: -1px;
@@ -92,12 +108,12 @@
 
         .login-header p {
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: clamp(13px, 2vw, 14px);
             margin-top: 8px;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
@@ -106,7 +122,6 @@
             color: var(--text-main);
             margin-bottom: 8px;
             display: block;
-            padding-left: 2px;
         }
 
         .form-group input {
@@ -116,7 +131,7 @@
             border: 1.5px solid #e2e8f0;
             font-size: 14px;
             font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             background: #fdfdfd;
         }
 
@@ -125,7 +140,6 @@
             outline: none;
             background: white;
             box-shadow: 0 0 0 4px rgba(31,107,79,0.1);
-            transform: translateY(-1px);
         }
 
         .btn-login {
@@ -138,62 +152,26 @@
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: 0.3s;
             box-shadow: 0 10px 15px -3px rgba(31,107,79,0.3);
             margin-top: 10px;
         }
 
         .btn-login:hover {
             background: var(--primary-dark);
-            box-shadow: 0 12px 20px -3px rgba(31,107,79,0.4);
             transform: translateY(-2px);
-        }
-
-        .error {
-            background: #fef2f2;
-            color: #991b1b;
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            font-size: 13px;
-            font-weight: 600;
-            border-left: 4px solid #ef4444;
-            display: flex;
-            align-items: center;
         }
 
         .copyright {
             position: absolute;
-            bottom: 40px;
-            font-size: 12px;
+            bottom: 30px;
+            font-size: 11px;
             color: var(--text-muted);
             font-weight: 500;
         }
 
-        /* Sisi Kanan (Visual) */
-        .right {
-            width: 55%;
-            background: linear-gradient(135deg, rgba(15, 63, 46, 0.95), rgba(31, 107, 79, 0.9)), 
-                        url('https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=2030&auto=format&fit=crop'); /* Gambar perpus abstrak */
-            background-size: cover;
-            background-position: center;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 100px;
-            position: relative;
-        }
-
-        .right::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent, rgba(0,0,0,0.3));
-        }
-
+        /* --- CONTENT VISUAL KANAN --- */
         .right-content {
-            position: relative;
             z-index: 2;
             max-width: 500px;
         }
@@ -211,22 +189,19 @@
         }
 
         .right-content h1 {
-            font-size: 48px;
+            font-size: clamp(32px, 5vw, 48px);
             font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             letter-spacing: -2px;
         }
 
         .right-content p {
-            font-size: 18px;
+            font-size: clamp(15px, 2vw, 18px);
             line-height: 1.6;
-            opacity: 0.9;
-            font-weight: 400;
             color: #e2e8f0;
         }
 
-        /* Garis Aksen Emas */
         .accent-line {
             width: 60px;
             height: 4px;
@@ -235,16 +210,47 @@
             border-radius: 2px;
         }
 
-        @media(max-width:1024px){
-            .left { width: 50%; padding: 40px; }
+        /* --- RESPONSIVITAS SEMUA PERANGKAT --- */
+
+        /* Tablet Mode */
+        @media (max-width: 1024px) {
+            .left { width: 50%; }
             .right { width: 50%; }
         }
 
-        @media(max-width:900px){
-            .right { display:none; }
-            .left { width:100%; }
-            .logo-header { left: 50%; transform: translateX(-50%); text-align: center; }
-            .logo-header { flex-direction: column; top: 30px; }
+        /* Mobile Mode (Layar HP & Tablet Vertikal) */
+        @media (max-width: 900px) {
+            body { overflow-y: auto; height: auto; min-height: 100vh; display: block; }
+            .right { display: none; } /* Visual kanan hilang di mobile */
+            .left { 
+                width: 100%; 
+                min-height: 100vh;
+                padding: 160px 24px 100px 24px; 
+                justify-content: center;
+            }
+            .logo-header { 
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+            .login-container { margin: 0 auto; }
+            .login-header { text-align: center; }
+            .copyright { 
+                position: relative; 
+                bottom: 0; 
+                margin-top: 50px; 
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        /* HP Sangat Kecil */
+        @media (max-width: 480px) {
+            .left { padding-top: 140px; }
+            .login-header h3 { font-size: 26px; }
+            .form-group input { padding: 12px 15px; }
         }
     </style>
 </head>
@@ -252,9 +258,8 @@
 <body>
 
 <div class="left">
-
     <div class="logo-header">
-        <img src="{{ asset('images/logo.png') }}" alt="Logo Provinsi Bengkulu">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo">
         <div>
             <small>Pemerintah Provinsi Bengkulu</small>
             <h2>DINAS PERPUSTAKAAN<br>DAN KEARSIPAN</h2>
@@ -268,7 +273,7 @@
         </div>
 
         @if ($errors->any())
-            <div class="error">
+            <div style="background: #fef2f2; color: #991b1b; padding: 12px; border-radius: 10px; margin-bottom: 20px; font-size: 13px; border-left: 4px solid #ef4444; display: flex; align-items: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;margin-right:10px" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -278,7 +283,6 @@
 
         <form method="POST" action="/login-admin">
             @csrf
-
             <div class="form-group">
                 <label for="email">Email Administrator</label>
                 <input type="email" id="email" name="email" placeholder="nama@email.com" required autofocus>
@@ -296,7 +300,6 @@
     <div class="copyright">
         &copy; 2026 <strong>DPK Provinsi Bengkulu</strong>. All rights reserved.
     </div>
-
 </div>
 
 <div class="right">

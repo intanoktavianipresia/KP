@@ -249,7 +249,7 @@
             <div class="sig-title">Kepala Dinas,</div>
             
             <div class="sig-name">( Dr. H. Meri Sasdi, M.Pd )</div>
-            <div class="sig-nip">NIP. 19xxxxxxxxxxxxxxx</div>
+            <div class="sig-nip">NIP. 197211151994091001</div>
         </div>
         <div style="clear: both;"></div>
     </div>

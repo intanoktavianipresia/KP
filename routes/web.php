@@ -95,4 +95,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     // ✅ FIX 2: Ubah LaporanController menjadi AdminController 
     // Agar fungsi hapus pesan dikelola di satu tempat yang sama
     Route::delete('/kontak/{id}', [AdminController::class, 'destroyKontak'])->name('admin.kontak.destroy');
+
+    Route::get('/update-jadwal/{id}', [AdminController::class, 'updateJadwal']);
 });

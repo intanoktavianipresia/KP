@@ -175,7 +175,8 @@ class AdminController extends Controller
         } catch (\Exception $e) {}
 
         // 🔥 TAMBAHAN WA (SATU-SATUNYA PENAMBAHAN)
-        $pesan = "📢 *PEMBERITAHUAN RESMI*\n\nYth. Bapak/Ibu {$data->nama_pemohon},\n\nMohon maaf, permohonan peminjaman arsip Anda *DITOLAK*.\n\n📄 *Detail Permohonan:*\n• Nomor : {$data->nomor_permohonan}\n• Arsip : {$data->arsip_dimohon}\n\nSilakan hubungi admin untuk informasi lebih lanjut.\n\nTerima kasih.\n\n—\n*Dinas Perpustakaan dan Kearsipan*";
+        $alasan = request('alasan');
+        $pesan = "📢 *PEMBERITAHUAN RESMI*\n\nYth. Bapak/Ibu {$data->nama_pemohon},\n\nMohon maaf, permohonan peminjaman arsip Anda *DITOLAK*.\n\n📄 *Detail Permohonan:*\n• Nomor : {$data->nomor_permohonan}\n• Arsip : {$data->arsip_dimohon}\n\n❗ *Alasan Penolakan:*\n{$alasan}\n\nTerima kasih.\n\n—\n*Dinas Perpustakaan dan Kearsipan*";
 
         $this->kirimWA($data->telepon, $pesan);
 
@@ -271,5 +272,74 @@ class AdminController extends Controller
     ]);
 
     return back()->with('success','Balasan berhasil dikirim');
+    }
+    
+ public function updateJadwal($id)
+{
+    $data = DB::table('pemohons')->where('id', $id)->first();
+
+    if (!$data) {
+        return back()->with('error','Data tidak ditemukan');
+    }
+
+    $tgl = request('tgl');
+    $waktu = request('waktu');
+    $alasan = request('alasan');
+
+    DB::table('pemohons')->where('id', $id)->update([
+        'tanggal_kunjungan' => $tgl,
+        'waktu_kunjungan' => $waktu,
+        'alasan_perubahan' => $alasan,
+        'updated_at' => now()
+    ]);
+
+    // riwayat
+    DB::table('riwayat_status')->insert([
+        'peminjaman_id' => $id,
+        'status' => 'reschedule',
+        'catatan' => $alasan,
+        'admin_id' => auth()->id(),
+        'created_at' => now(),
+        'updated_at' => now()
+    ]);
+
+    // update data untuk email
+    $data->tanggal_kunjungan = $tgl;
+    $data->waktu_kunjungan = $waktu;
+    $data->alasan_perubahan = $alasan;
+
+    // EMAIL
+    try {
+        Mail::send('email.reschedule', ['data'=>$data], function($msg) use ($data){
+    $msg->to($data->email)
+        ->subject('Perubahan Jadwal Kunjungan');
+});
+    } catch (\Exception $e) {}
+
+    // WA
+    $pesan = "📢 *PERUBAHAN JADWAL KUNJUNGAN*\n\n"
+    ."Yth. Bapak/Ibu *{$data->nama_pemohon}*,\n\n"
+    ."Kami informasikan bahwa jadwal kunjungan Anda telah *DIUBAH*.\n\n"
+
+    ."📄 *Detail Permohonan:*\n"
+    ."• Nomor : {$data->nomor_permohonan}\n"
+    ."• Arsip : {$data->arsip_dimohon}\n\n"
+
+    ."📅 *Jadwal Baru:*\n"
+    ."• Tanggal : ".date('d-m-Y', strtotime($tgl))."\n"
+    ."• Waktu : $waktu\n\n"
+
+    ."📝 *Alasan Perubahan:*\n"
+    ."_{$alasan}_\n\n"
+
+    ."Mohon menyesuaikan dengan jadwal terbaru.\n\n"
+    ."Terima kasih.\n\n"
+    ."—\n*Dinas Perpustakaan & Kearsipan*";
+
+// ✅ WAJIB ADA
+$this->kirimWA($data->telepon, $pesan);
+
+// ✅ WAJIB ADA
+return back()->with('success','Jadwal berhasil diperbarui');
 }
 }

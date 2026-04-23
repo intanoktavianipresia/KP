@@ -24,26 +24,28 @@
     .banner {
         position: relative;
         background: linear-gradient(135deg, var(--pine-green), var(--pine-light));
-        padding: 100px 20px;
+        padding: 100px 20px 140px;
         text-align: center;
         color: white;
         clip-path: ellipse(150% 100% at 50% 0%);
     }
 
     .banner h1 {
-        font-size: 2.8rem;
+        font-size: clamp(2rem, 5vw, 3rem);
         font-weight: 800;
-        letter-spacing: -1px;
+        letter-spacing: -1.5px;
+        margin-bottom: 10px;
     }
 
     /* ===== CARD BOXES ===== */
     .cek-box, .status-card {
         background: white;
-        border-radius: 24px;
-        padding: 40px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.04);
-        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 30px;
+        padding: clamp(25px, 5vw, 45px);
+        box-shadow: 0 25px 50px -12px rgba(6, 78, 59, 0.08);
+        border: 1px solid rgba(255,255,255,0.8);
         height: 100%;
+        transition: transform 0.3s ease;
     }
 
     .input-group-custom {
@@ -53,209 +55,252 @@
 
     .input-group-custom input {
         width: 100%;
-        padding: 15px 20px 15px 50px;
-        border-radius: 15px;
-        border: 2px solid #e2e8f0;
+        padding: 18px 20px 18px 55px;
+        border-radius: 18px;
+        border: 2px solid #f1f5f9;
+        background: #f8fafc;
         transition: 0.3s;
-        font-weight: 600;
+        font-weight: 700;
+        color: var(--pine-green);
+        letter-spacing: 1px;
     }
 
     .input-group-custom input:focus {
+        background: white;
         border-color: var(--pine-light);
-        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+        box-shadow: 0 10px 20px rgba(5, 150, 105, 0.05);
         outline: none;
     }
 
     .input-group-custom i {
         position: absolute;
-        left: 20px;
+        left: 22px;
         top: 50%;
         transform: translateY(-50%);
         color: var(--pine-light);
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
 
     .btn-cek {
         background: var(--pine-green);
         color: white;
         border: none;
-        padding: 15px;
-        border-radius: 15px;
+        padding: 18px;
+        border-radius: 18px;
         width: 100%;
         font-weight: 800;
-        margin-top: 15px;
-        transition: 0.3s;
+        margin-top: 20px;
+        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
     .btn-cek:hover {
         background: var(--pine-light);
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(6, 78, 59, 0.2);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(6, 78, 59, 0.2);
+        color: white;
     }
 
     /* ===== STATUS BADGES ===== */
     .badge-status {
-        padding: 8px 16px;
+        padding: 10px 20px;
         border-radius: 50px;
         font-size: 0.85rem;
-        font-weight: 700;
+        font-weight: 800;
         display: inline-flex;
         align-items: center;
         gap: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
-    .bg-menunggu { background: #fff7ed; color: #c2410c; }
-    .bg-setuju { background: #ecfdf5; color: #047857; }
-    .bg-tolak { background: #fef2f2; color: #b91c1c; }
-    .bg-selesai { background: #eff6ff; color: #1d4ed8; }
+    .bg-menunggu { background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; }
+    .bg-setuju { background: #ecfdf5; color: #047857; border: 1px solid #d1fae5; }
+    .bg-tolak { background: #fef2f2; color: #b91c1c; border: 1px solid #fee2e2; }
+    .bg-selesai { background: #eff6ff; color: #1d4ed8; border: 1px solid #dbeafe; }
 
     /* ===== TIMELINE TRACKER ===== */
     .timeline {
         position: relative;
         padding-left: 30px;
-        border-left: 2px dashed #e2e8f0;
-        margin-left: 10px;
+        border-left: 3px solid #f1f5f9;
+        margin-left: 15px;
     }
 
     .timeline-item {
         position: relative;
-        padding-bottom: 30px;
+        padding-bottom: 35px;
     }
 
     .timeline-item::before {
         content: '';
         position: absolute;
-        left: -39px;
+        left: -41.5px;
         top: 0;
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
         background: white;
-        border: 3px solid var(--pine-light);
+        border: 4px solid #e2e8f0;
+        z-index: 2;
+        transition: 0.3s;
     }
 
     .timeline-item.active::before {
+        border-color: var(--pine-light);
         background: var(--pine-light);
-        box-shadow: 0 0 0 5px rgba(5, 150, 105, 0.2);
+        box-shadow: 0 0 0 6px rgba(5, 150, 105, 0.15);
     }
 
     .timeline-date {
         font-size: 0.75rem;
-        font-weight: 700;
+        font-weight: 800;
         color: #94a3b8;
+        margin-bottom: 5px;
         text-transform: uppercase;
     }
 
     .timeline-content {
         font-weight: 600;
         font-size: 0.95rem;
+        color: #334155;
+        line-height: 1.5;
+        background: #f8fafc;
+        padding: 12px 18px;
+        border-radius: 15px;
+        display: inline-block;
     }
 
+    @media (max-width: 768px) {
+        .banner { padding: 80px 20px 120px; }
+        .cek-box, .status-card { border-radius: 24px; }
+    }
 </style>
 
 <div class="banner">
     <div class="container">
-        <h1>Lacak Permohonan</h1>
-        <p>Pantau transparansi layanan peminjaman arsip Anda secara langsung</p>
+        <h1 data-aos="fade-down">Lacak Permohonan</h1>
+        <p class="opacity-75 fs-5">Pantau proses verifikasi dan status peminjaman arsip Anda secara real-time.</p>
     </div>
 </div>
 
-<div class="container" style="margin-top: -60px; position: relative; z-index: 100;">
+<div class="container" style="margin-top: -70px; position: relative; z-index: 100; margin-bottom: 100px;">
     <div class="row g-4 justify-content-center">
         
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-md-5" data-aos="fade-right">
             <div class="cek-box">
-                <h5 class="fw-800 mb-2">Cari Nomor Antrean</h5>
-                <p class="small text-muted">Masukkan nomor permohonan yang diberikan saat pendaftaran.</p>
+                <div class="d-flex align-items-center gap-3 mb-4">
+                    <div class="p-2 rounded-3 bg-success bg-opacity-10"><i class="bi bi-search text-success fs-4"></i></div>
+                    <h5 class="fw-800 mb-0">Cek Tiket</h5>
+                </div>
+                <p class="small text-muted">Masukkan nomor permohonan unik yang Anda dapatkan setelah melakukan registrasi peminjaman.</p>
                 
-                <form method="POST" action="/pemohon/status/cek">
+                <form method="POST" action="{{ url('/pemohon/status/cek') }}">
                     @csrf
                     <div class="input-group-custom">
-                        <i class="bi bi-ticket-perforated"></i>
-                        <input type="text" name="nomor" placeholder="PNM-2026-XXXX" required>
+                        <i class="bi bi-qr-code-scan"></i>
+                        <input type="text" name="nomor" placeholder="PNM-2026-XXXX" required value="{{ old('nomor') }}">
                     </div>
                     <button class="btn-cek">
-                        <i class="bi bi-search"></i> Periksa Sekarang
+                        Cari Data Permohonan <i class="bi bi-arrow-right"></i>
                     </button>
                 </form>
 
                 @if(session('warning'))
-                    <div class="alert mt-3 py-2 small d-flex align-items-center gap-2" style="background: #fff1f2; color: #9f1239; border-radius: 12px; border: none;">
-                        <i class="bi bi-exclamation-circle-fill"></i> {{ session('warning') }}
+                    <div class="alert mt-4 py-3 small d-flex align-items-center gap-3" style="background: #fff1f2; color: #9f1239; border-radius: 15px; border: 1px solid #ffe4e6;">
+                        <i class="bi bi-exclamation-triangle-fill fs-5"></i> 
+                        <div><b>Maaf!</b> {{ session('warning') }}</div>
                     </div>
                 @endif
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-7 col-md-7" data-aos="fade-left">
             <div class="status-card">
                 @if(!empty($data))
-                    <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start gap-3 mb-5">
                         <div>
-                            <h6 class="text-muted fw-bold small text-uppercase mb-1">Informasi Terkini</h6>
-                            <h4 class="fw-800 m-0">{{ $data->nomor_permohonan }}</h4>
+                            <h6 class="text-muted fw-bold small text-uppercase mb-1" style="letter-spacing: 1px;">Kode Permohonan</h6>
+                            <h3 class="fw-900 m-0 text-success" style="letter-spacing: -1px;">{{ $data->nomor_permohonan }}</h3>
                         </div>
                         
                         @php
-                            $status_class = [
-                                'menunggu' => 'bg-menunggu',
-                                'disetujui' => 'bg-setuju',
-                                'ditolak' => 'bg-tolak',
-                                'selesai' => 'bg-selesai'
-                            ][$data->status] ?? 'bg-menunggu';
-                            
-                            $status_icon = [
-                                'menunggu' => 'bi-clock-history',
-                                'disetujui' => 'bi-check-circle',
-                                'ditolak' => 'bi-x-circle',
-                                'selesai' => 'bi-flag'
-                            ][$data->status] ?? 'bi-info-circle';
+                            $status_map = [
+                                'menunggu' => ['class' => 'bg-menunggu', 'icon' => 'bi-clock-history', 'label' => 'Menunggu Verifikasi'],
+                                'disetujui' => ['class' => 'bg-setuju', 'icon' => 'bi-check-all', 'label' => 'Permohonan Disetujui'],
+                                'ditolak' => ['class' => 'bg-tolak', 'icon' => 'bi-x-lg', 'label' => 'Permohonan Ditolak'],
+                                'selesai' => ['class' => 'bg-selesai', 'icon' => 'bi-archive-fill', 'label' => 'Selesai / Diarsipkan']
+                            ];
+                            $curr = $status_map[$data->status] ?? ['class' => 'bg-menunggu', 'icon' => 'bi-info-circle', 'label' => $data->status];
                         @endphp
 
-                        <span class="badge-status {{ $status_class }}">
-                            <i class="bi {{ $status_icon }}"></i> {{ ucfirst($data->status) }}
+                        <span class="badge-status {{ $curr['class'] }}">
+                            <i class="bi {{ $curr['icon'] }}"></i> {{ $curr['label'] }}
                         </span>
                     </div>
 
-                    <div class="row mb-4">
-                        <div class="col-6">
-                            <label class="small text-muted d-block">Nama Pemohon</label>
-                            <span class="fw-bold">{{ $data->nama_pemohon }}</span>
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6">
+                            <div class="p-3 rounded-4 border">
+                                <label class="small text-muted d-block mb-1">Nama Pemohon</label>
+                                <span class="fw-800 fs-5">{{ $data->nama_pemohon }}</span>
+                            </div>
                         </div>
-                        <div class="col-6 text-end">
-                            <label class="small text-muted d-block">Tanggal Pengajuan</label>
-                            <span class="fw-bold">{{ date('d M Y', strtotime($data->created_at)) }}</span>
+                        <div class="col-sm-6">
+                            <div class="p-3 rounded-4 border">
+                                <label class="small text-muted d-block mb-1">Tanggal Kunjungan</label>
+                                <span class="fw-800 fs-5 text-primary"><i class="bi bi-calendar3 me-2"></i>{{ date('d M Y', strtotime($data->tanggal_kunjungan)) }}</span>
+                            </div>
                         </div>
                     </div>
 
-                    <hr class="my-4 opacity-50">
+                    @if(!empty($data->alasan_perubahan))
+                        <div class="p-3 mb-4 d-flex gap-3" style="background:#fff7ed; border-radius:18px; border:1px solid #ffedd5;">
+                            <i class="bi bi-info-circle-fill text-warning fs-4"></i>
+                            <div>
+                                <b class="d-block text-warning mb-1">Catatan Khusus Petugas:</b>
+                                <span class="text-muted small">{{ $data->alasan_perubahan }}</span>
+                            </div>
+                        </div>
+                    @endif
 
-                    <h6 class="fw-800 mb-4"><i class="bi bi-list-stars me-2"></i> Log Perkembangan</h6>
+                    <hr class="my-5 opacity-25">
+
+                    <div class="d-flex align-items-center gap-2 mb-4">
+                        <div class="p-2 rounded-circle bg-light"><i class="bi bi-activity text-primary"></i></div>
+                        <h6 class="fw-800 m-0">Riwayat & Log Aktivitas</h6>
+                    </div>
                     
                     @if(!empty($riwayat) && count($riwayat) > 0)
                         <div class="timeline">
                             @foreach($riwayat as $index => $r)
                                 <div class="timeline-item {{ $index === 0 ? 'active' : '' }}">
-                                    <div class="timeline-date">{{ date('d M Y, H:i', strtotime($r->created_at)) }}</div>
+                                    <div class="timeline-date">{{ date('d F Y', strtotime($r->created_at)) }} • {{ date('H:i', strtotime($r->created_at)) }} WIB</div>
                                     <div class="timeline-content">{{ $r->catatan }}</div>
                                 </div>
                             @endforeach
                         </div>
                     @else
-                        <div class="text-center py-4 bg-light rounded-4">
-                            <i class="bi bi-hourglass-split text-muted display-6"></i>
-                            <p class="text-muted small mt-2">Belum ada pembaruan log untuk permohonan ini.</p>
+                        <div class="text-center py-5 bg-light rounded-4 border border-dashed">
+                            <i class="bi bi-hourglass-top text-muted display-6"></i>
+                            <p class="text-muted small mt-2 mb-0">Permohonan Anda baru saja didaftarkan.<br>Belum ada aktivitas log terbaru.</p>
                         </div>
                     @endif
 
                 @else
                     <div class="text-center py-5">
-                        <img src="https://cdn-icons-png.flaticon.com/512/10515/10515159.png" style="width: 120px; opacity: 0.3;" class="mb-3">
-                        <h5 class="fw-bold text-muted">Belum Ada Data</h5>
-                        <p class="text-muted small px-lg-5">Silakan masukkan nomor permohonan Anda di kolom sebelah kiri untuk melihat status terbaru.</p>
+                        <div class="mb-4">
+                            <i class="bi bi-clipboard2-x text-light-emphasis" style="font-size: 5rem;"></i>
+                        </div>
+                        <h4 class="fw-800 text-muted">Belum Ada Data</h4>
+                        <p class="text-muted small px-lg-5">Silakan gunakan kolom pencarian di sebelah kiri untuk melihat detail status permohonan peminjaman arsip Anda.</p>
+                        <div class="mt-4">
+                            <span class="badge rounded-pill bg-light text-muted p-2 px-3">Status: Siap Melayani</span>
+                        </div>
                     </div>
                 @endif
             </div>
@@ -263,5 +308,10 @@
 
     </div>
 </div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+</script>
 
 @endsection
