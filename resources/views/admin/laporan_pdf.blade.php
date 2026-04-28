@@ -65,7 +65,7 @@
             margin: 30px 0 20px 0;
         }
         .main-title {
-            font-size: 13.5pt;
+            font-size: 13.5pt; 
             font-weight: 800;
             text-decoration: underline;
             text-transform: uppercase;

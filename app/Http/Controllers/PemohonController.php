@@ -28,9 +28,6 @@ class PemohonController extends Controller
         return view('pemohon.peminjaman');
     }
 
-    // ================================
-    // SIMPAN PEMINJAMAN
-    // ================================
     public function simpanPeminjaman(Request $request)
     {
         $request->validate([

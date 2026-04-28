@@ -31,7 +31,6 @@
             overflow: hidden;
         }
 
-        /* --- LAYOUT UTAMA --- */
         .left {
             width: 45%;
             background: white;
@@ -58,7 +57,6 @@
             position: relative;
         }
 
-        /* --- KOMPONEN LOGO --- */
         .logo-header {
             position: absolute;
             top: clamp(30px, 5vh, 50px);
@@ -89,7 +87,6 @@
             text-transform: uppercase;
         }
 
-        /* --- FORM LOGIN --- */
         .login-container {
             width: 100%;
             max-width: 400px;
@@ -170,7 +167,6 @@
             font-weight: 500;
         }
 
-        /* --- CONTENT VISUAL KANAN --- */
         .right-content {
             z-index: 2;
             max-width: 500px;
@@ -210,15 +206,12 @@
             border-radius: 2px;
         }
 
-        /* --- RESPONSIVITAS SEMUA PERANGKAT --- */
 
-        /* Tablet Mode */
         @media (max-width: 1024px) {
             .left { width: 50%; }
             .right { width: 50%; }
         }
 
-        /* Mobile Mode (Layar HP & Tablet Vertikal) */
         @media (max-width: 900px) {
             body { overflow-y: auto; height: auto; min-height: 100vh; display: block; }
             .right { display: none; } /* Visual kanan hilang di mobile */

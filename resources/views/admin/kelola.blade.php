@@ -20,7 +20,6 @@
         font-family: 'Inter', sans-serif; 
     }
 
-    /* Header Styling */
     .main-title {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 800;
@@ -116,7 +115,6 @@
         .table tbody td { padding: 22px 20px; vertical-align: middle; }
     }
 
-    /* Status Badges */
     .badge-status {
         padding: 6px 12px;
         border-radius: 10px;

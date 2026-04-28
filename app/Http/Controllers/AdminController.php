@@ -144,7 +144,6 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Permohonan berhasil disetujui');
     }
 
-    // ✅ FIX: HANYA INI YANG DIPERBAIKI + TAMBAH WA
     public function tolak($id)
     {
         $data = DB::table('pemohons')->where('id', $id)->first();
@@ -174,7 +173,6 @@ class AdminController extends Controller
             });
         } catch (\Exception $e) {}
 
-        // 🔥 TAMBAHAN WA (SATU-SATUNYA PENAMBAHAN)
         $alasan = request('alasan');
         $pesan = "📢 *PEMBERITAHUAN RESMI*\n\nYth. Bapak/Ibu {$data->nama_pemohon},\n\nMohon maaf, permohonan peminjaman arsip Anda *DITOLAK*.\n\n📄 *Detail Permohonan:*\n• Nomor : {$data->nomor_permohonan}\n• Arsip : {$data->arsip_dimohon}\n\n❗ *Alasan Penolakan:*\n{$alasan}\n\nTerima kasih.\n\n—\n*Dinas Perpustakaan dan Kearsipan*";
 
@@ -336,10 +334,8 @@ class AdminController extends Controller
     ."Terima kasih.\n\n"
     ."—\n*Dinas Perpustakaan & Kearsipan*";
 
-// ✅ WAJIB ADA
 $this->kirimWA($data->telepon, $pesan);
 
-// ✅ WAJIB ADA
 return back()->with('success','Jadwal berhasil diperbarui');
 }
 }

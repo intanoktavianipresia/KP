@@ -23,7 +23,6 @@
         overflow-x: hidden;
     }
 
-    /* ===== HERO SECTION ===== */
     .hero-page {
         position: relative;
         background: linear-gradient(135deg, var(--pine-green), var(--pine-light));
@@ -57,7 +56,6 @@
         line-height: 1.1;
     }
 
-    /* ===== CONTACT CARDS & WRAPPERS ===== */
     .contact-card {
         background: white;
         border-radius: 32px;
@@ -92,7 +90,6 @@
         transform: rotate(-10deg);
     }
 
-    /* ===== FORM STYLING ===== */
     .form-label {
         font-weight: 700;
         font-size: 0.85rem;
@@ -138,7 +135,6 @@
         color: white;
     }
 
-    /* ===== MAP OVERLAY ===== */
     .map-container {
         border-radius: 32px;
         overflow: hidden;
@@ -157,7 +153,6 @@
         .hero-page { padding: 100px 20px 140px; }
     }
 
-    /* FIX AGAR FOOTER TIDAK RAKSASA */
     footer .map-container {
         min-height: 200px !important; /* Memaksa map di footer untuk tetap kecil */
         height: 200px !important;

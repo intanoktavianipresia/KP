@@ -15,7 +15,6 @@
         --border-color: #e2e8f0;
     }
 
-    /* Base Container - Memastikan tidak pecah di monitor ultra-wide */
     .dashboard-container {
         font-family: 'Inter', sans-serif;
         color: var(--slate-900);
@@ -24,7 +23,6 @@
         padding: clamp(10px, 3vw, 30px);
     }
 
-    /* Tipografi Dinamis */
     .main-title {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 800;
@@ -35,7 +33,6 @@
         line-height: 1.2;
     }
 
-    /* Bento Grid System - Semua Perangkat */
     .bento-container {
         display: grid;
         grid-template-columns: 1fr; /* Default mobile 1 kolom */
@@ -43,7 +40,6 @@
         align-items: stretch;
     }
 
-    /* Tablet & Desktop Layout */
     @media (min-width: 768px) {
         .bento-container {
             grid-template-columns: repeat(2, 1fr);
@@ -58,7 +54,6 @@
         .span-3 { grid-column: span 3; }
     }
 
-    /* Card Detail */
     .card-detail {
         background: white;
         border: 1px solid var(--border-color);
@@ -89,7 +84,6 @@
         letter-spacing: 0.8px;
     }
 
-    /* Info Styling Responsif */
     .info-item { margin-bottom: clamp(12px, 2vw, 20px); }
     .info-label {
         font-size: clamp(9px, 1vw, 10px);
@@ -106,7 +100,6 @@
         word-break: break-word; 
     }
 
-    /* Status Pill - Responsif terhadap konten */
     .status-pill {
         padding: clamp(6px, 1vw, 8px) clamp(12px, 2vw, 16px);
         border-radius: 10px;
@@ -122,7 +115,6 @@
     .approved { background: #ecfdf5; color: #047857; border: 1px solid #d1fae5; }
     .rejected { background: #fef2f2; color: #b91c1c; border: 1px solid #fee2e2; }
 
-    /* Arsip Box Responsif */
     .arsip-box {
         padding: clamp(15px, 3vw, 25px);
         border-radius: 20px;
@@ -133,7 +125,6 @@
     }
     @media (min-width: 992px) { .arsip-box { margin-bottom: 0; } }
 
-    /* Action Bar - Mobile First */
     .action-bar {
         margin-top: 30px;
         padding: clamp(15px, 3vw, 24px);
@@ -149,7 +140,6 @@
         .action-bar { flex-direction: row; justify-content: space-between; align-items: center; }
     }
 
-    /* Button Custom Responsif */
     .btn-custom {
         height: clamp(48px, 6vw, 52px);
         padding: 0 clamp(16px, 3vw, 24px);
@@ -359,7 +349,6 @@
 </div>
 
 <script>
-    // Logic tetap sama 100%
     document.getElementById('btnSetujui').onclick = function() {
         let tgl = document.getElementById('tgl').value;
         let waktu = document.getElementById('waktu').value;

@@ -19,7 +19,6 @@
             --transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        /* --- CORE RESET (FIX BOCOR) --- */
         html, body {
             max-width: 100%;
             overflow-x: hidden; /* Kunci agar tidak bisa geser kanan */
@@ -35,7 +34,6 @@
             line-height: 1.6;
         }
 
-        /* PERBAIKAN KONTAINER: Responsif tanpa px-5 yang merusak mobile */
         .container-premium {
             width: 100%;
             padding-right: 20px;
@@ -47,7 +45,6 @@
             .container-premium { padding: 0 80px; }
         }
 
-        /* --- TOP HEADER --- */
         .top-header {
             background: var(--primary);
             color: white;
@@ -76,7 +73,6 @@
             text-transform: uppercase;
         }
 
-        /* --- NAVBAR PREMIUM --- */
         .navbar-custom {
             background: white;
             padding: 0;
@@ -99,7 +95,6 @@
             transition: var(--transition);
         }
 
-        /* Indikator Aktif & Hover Desktop */
         .navbar-nav .nav-link:hover, 
         .navbar-nav .nav-link.active {
             color: var(--primary) !important;
@@ -122,7 +117,6 @@
             }
         }
 
-        /* Mobile Menu Fix */
         @media (max-width: 991.98px) {
             .navbar-custom { padding: 10px 0; }
             .navbar-collapse {
@@ -141,14 +135,13 @@
             }
         }
 
-        /* --- MAIN CONTENT AREA --- */
         main {
             min-height: 80vh;
             width: 100%;
             overflow: hidden; /* Mencegah konten child nendang ke samping */
         }
 
-        /* --- FOOTER PREMIUM --- */
+        
         .footer {
             background: #064e3b;
             color: white;
@@ -203,7 +196,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* FIX ROW: Mencegah negatif margin nendang keluar layar */
         .row {
             margin-right: 0 !important;
             margin-left: 0 !important;
@@ -314,7 +306,6 @@
     <script>
         AOS.init({ duration: 800, once: true });
 
-        // Fix Navbar agar tertutup otomatis di mobile setelah klik link
         const navLinks = document.querySelectorAll('.nav-link');
         const menuToggle = document.getElementById('navbarNav');
         const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle:false});

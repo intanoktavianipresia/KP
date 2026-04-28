@@ -36,7 +36,6 @@
             overflow-x: hidden;
         }
 
-        /* --- ANIMATIONS --- */
         .badge-pulse { animation: pulse 1.2s infinite; }
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -56,7 +55,6 @@
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* --- HEADER & NAVBAR (INI YANG DIPERBAIKI) --- */
         .top-header {
             background: linear-gradient(135deg, var(--pine-green), var(--pine-dark));
             color: white; display: flex; justify-content: space-between; align-items: center;
@@ -67,7 +65,6 @@
         .header-left { display: flex; align-items: center; gap: 12px; }
         .logo { width: 35px; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
         
-        /* Teks Instansi agar tidak hilang di HP */
         .instansi { font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: 13px; line-height: 1.1; }
         .provinsi { font-size: 10px; opacity: 0.85; letter-spacing: 1px; text-transform: uppercase; }
 
@@ -76,7 +73,6 @@
             .provinsi { display: none; } /* Sembunyikan provinsi di HP sangat kecil agar tidak penuh */
         }
 
-        /* --- SIDEBAR & LAYOUT --- */
         .layout { display: flex; min-height: calc(100vh - 70px); position: relative; }
 
         .sidebar {
@@ -95,7 +91,6 @@
         .sidebar a:hover { background: rgba(255,255,255,0.05); color: white; transform: translateX(4px); }
         .sidebar a.active { background: var(--pine-green); color: white; box-shadow: 0 10px 15px -3px rgba(15, 93, 63, 0.25); }
 
-        /* Responsif Sidebar */
         @media (max-width: 992px) {
             .sidebar { position: fixed; left: -270px; height: calc(100vh - 70px); top: 70px; width: 270px; }
             .sidebar.active { left: 0; }
@@ -112,11 +107,9 @@
             .sidebar.collapsed a { justify-content: center; padding: 15px; }
         }
 
-        /* --- CONTENT --- */
         .content { flex: 1; padding: 35px; background: #f8fafc; min-width: 0; transition: var(--transition); }
         @media (max-width: 768px) { .content { padding: 20px 15px; } }
 
-        /* --- NOTIF UI --- */
         #successAnim {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: white; padding: 40px; border-radius: 24px;

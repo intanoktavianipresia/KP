@@ -24,7 +24,6 @@
         overflow-x: hidden;
     }
 
-    /* ===== HERO SECTION WITH ANIMATED OVERLAY ===== */
     .hero-informasi {
         position: relative;
         background: var(--primary-gradient);
@@ -59,7 +58,6 @@
         text-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
-    /* Decorative Curve */
     .hero-curve {
         position: absolute;
         bottom: -1px;
@@ -71,7 +69,6 @@
         z-index: 3;
     }
 
-    /* ===== MAIN CONTENT CARD ===== */
     .content-card {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(15px);
@@ -91,7 +88,6 @@
         font-weight: 400;
     }
 
-    /* ===== CATEGORY BADGES ===== */
     .badge-jenis {
         padding: 15px 30px;
         border-radius: 20px;
@@ -143,7 +139,6 @@
         transform: translateX(8px);
     }
 
-    /* ===== ALUR PROSEDUR ===== */
     .step-container {
         display: flex;
         justify-content: space-between;

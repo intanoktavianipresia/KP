@@ -20,7 +20,6 @@
         margin: 0 auto;
     }
 
-    /* Filter Wrapper - Modern Scroll */
     .filter-wrapper {
         display: flex;
         gap: clamp(8px, 2vw, 12px);
@@ -57,7 +56,6 @@
         transform: translateY(-1px);
     }
 
-    /* Premium Card Container */
     .premium-card {
         background: white;
         border-radius: clamp(20px, 4vw, 32px);
@@ -87,7 +85,6 @@
         margin-top: 5px;
     }
 
-    /* Responsive Table Strategy */
     .table-premium { width: 100%; border-collapse: separate; border-spacing: 0; }
 
     @media (max-width: 991px) {
@@ -117,7 +114,7 @@
             letter-spacing: 0.5px;
             text-align: left;
         }
-        /* Spasi khusus untuk kolom Opsi di mobile */
+        
         .table-premium tbody td[data-label="Tindakan"] {
             margin-top: 15px;
             border-top: 1px solid #f1f5f9 !important;
@@ -126,7 +123,6 @@
         .btn-action { width: 100%; justify-content: center; }
     }
 
-    /* Desktop View */
     @media (min-width: 992px) {
         .table-premium thead th {
             background-color: #f8fafc;
@@ -147,7 +143,6 @@
         .table-premium tbody tr:hover { background-color: #fafbfb; }
     }
 
-    /* Row Highlights */
     .row-today { background-color: var(--pine-light) !important; }
     
     .pill-status {
@@ -216,7 +211,7 @@
             </div>
         </div>
 
-        <div class="table-responsive-none"> {{-- Custom responsive handled by CSS --}}
+        <div class="table-responsive-none"> 
             <table class="table-premium">
                 <thead>
                     <tr>

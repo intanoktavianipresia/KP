@@ -24,9 +24,6 @@
         overflow-x: hidden;
     }
 
-    /* =========================================
-       HERO SECTION (ULTRA RESPONSIVE)
-       ========================================= */
     .hero {
         position: relative;
         min-height: 100vh;
@@ -41,7 +38,6 @@
         color: white;
     }
 
-    /* Fix background-attachment for mobile devices */
     @media (max-width: 991px) {
         .hero { background-attachment: scroll; padding: 120px 0 80px; }
     }
@@ -93,9 +89,6 @@
         fill: #ffffff;
     }
 
-    /* =========================================
-       SECTION GENERAL STYLES
-       ========================================= */
     .section-title {
         font-weight: 800;
         font-size: clamp(1.8rem, 4vw, 2.8rem);
@@ -112,9 +105,6 @@
         margin-bottom: 40px;
     }
 
-    /* =========================================
-       CARDS & BOXES (FIXED)
-       ========================================= */
     .card-modern {
         background: white;
         padding: 40px 30px;
@@ -166,9 +156,6 @@
         box-shadow: 0 15px 30px rgba(0,0,0,0.05);
     }
 
-    /* =========================================
-       HISTORY TIMELINE (OPTIMIZED)
-       ========================================= */
     .history-timeline {
         position: relative;
         padding-left: 20px;
@@ -212,9 +199,6 @@
         box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
     }
 
-    /* =========================================
-       UTILITIES
-       ========================================= */
     .text-justify { text-align: justify; }
     
     @media (max-width: 991px) {

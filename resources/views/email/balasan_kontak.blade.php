@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tanggapan Layanan Kearsipan</title>
     <style>
-        /* Optimasi untuk Mobile */
+        
         @media only screen and (max-width: 620px) {
             .container-table {
                 width: 100% !important;

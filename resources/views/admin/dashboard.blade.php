@@ -36,7 +36,6 @@
         margin-bottom: 5px;
     }
 
-    /* Alert Responsiveness */
     .custom-alert {
         border-radius: 16px;
         border: none;
@@ -51,21 +50,17 @@
         color: #065f46;
     }
 
-    /* Bento Grid System: Adaptive for all screens */
     .bento-grid {
         display: grid;
-        /* Default: 1 kolom untuk layar sangat kecil (< 350px) */
         grid-template-columns: 1fr; 
         gap: 12px;
         margin-bottom: 25px;
     }
 
-    /* Mobile & Small Tablets (2 columns) */
     @media (min-width: 400px) {
         .bento-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
-    /* Desktop (4 columns) */
     @media (min-width: 992px) { 
         .bento-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } 
     }
@@ -280,7 +275,6 @@
             }
         });
 
-        // Update chart layout on resize
         window.addEventListener('resize', () => {
             const isMobile = window.innerWidth < 768;
             mainChart.options.scales.x.ticks.font.size = isMobile ? 10 : 12;

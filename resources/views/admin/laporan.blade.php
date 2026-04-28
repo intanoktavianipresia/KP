@@ -21,7 +21,6 @@
 
     body { background-color: #f8fafc; font-family: 'Inter', sans-serif; color: var(--slate-900); }
 
-    /* Responsivitas Judul (Clamp) */
     .page-title { 
         font-family: 'Plus Jakarta Sans', sans-serif; 
         font-weight: 800; 
@@ -29,7 +28,6 @@
         letter-spacing: -1px; 
     }
 
-    /* Bento Card Adaptive */
     .bento-card {
         background: white;
         border: 1px solid var(--slate-200);
@@ -39,7 +37,6 @@
         margin-bottom: 25px;
     }
 
-    /* Modern Print Buttons - Flex Wrap for Mobile */
     .export-container {
         display: flex;
         flex-wrap: wrap;
